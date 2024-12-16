@@ -1,0 +1,115 @@
+{
+    "translation":{
+        "menu":{
+            "diagrams":"Diagramy",
+            "theory":"Teoria",
+            "about":"O Aplikacji",
+            "contact":"Kontakt",
+            "logIn":"Login"
+        },
+        "login":{
+            "send": "Send",
+            "email":"Adres Email",
+            "password":"Hasło",
+            "confirmPassword":"Potwierdź Hasło",
+            "logIn":"Zaloguj",
+            "register":"Zarejestruj się",
+            "reset":"Zresetuj hasło",
+            "emailsent":", the email has been sent.",
+            "thanks":"Thank you ",
+            "emailsentF":"Message sending failed, please try again later.",
+            "regPageTitle":"Rejestracja"
+            
+        },
+        "contact":{
+            "send": "Wyślij",
+            "email":"Adres email",
+            "name":"Imię i Nazwisko",
+            "textarea":"Twoja wiadomość",
+            "emailsent":", email został wysłany.",
+            "thanks":"Dziękuję ",
+            "emailsentF":"Wysyłka wiadomości nieudana, spróbuj póżniej."
+        },
+
+        "diagrams":{
+            "function":"Funkcja logiczna",
+            "functionType":"Typ Funkcji",
+            "change":"Zmień kolejność zmiennych (drag'n'drop)",
+            "KPI":"KPI",
+            "KPItitle":"Kanoniczna Postać Iloczynu",
+            "KPS":"KPS",
+            "KPStitle":"Kanoniczna Postać Sumy",
+            "generate":"Generuj",
+            "truthTable":"Tabela Prawdy"
+        },
+        "fucntionStorage":{
+            "title":"Zapisz/Wczytaj funkcję",
+            "saveTitle":"---------- Zapisz ----------",
+            "loadTitle":"---------- Wczytaj ----------",
+            "save":"Zapis",
+            "load":"Wczytaj",
+            "delete":"Usuń",
+            "function":"Funkcja Logiczna",
+            "functionType":"Typ Funkcji",
+            "description":"Opis",
+            "close":"Zamknij",
+            "KPI":"KPI",
+            "KPS":"KPS",
+            "tip":"Wyświetl zapisane funkcje"
+        },
+        "statusBar":{
+            "statistic":"STATYSTYKI",
+            "nonTerminal":"Ilość węzłów nieterminalowych",
+            "terminal":"Ilość węzłów terminalowych",
+            "allNodes":"Ilość węzłów razem",
+            "importantNodes":"Ilość węzłów terminalowych znaczących",
+            "edges":"Ilość krawędzi",
+            "minKPS":"funkcja uproszczona",
+            "minKPI":"funkcja uproszczona"
+        },
+        "ROBDD":{
+            "tautology":"TAUTOLOGIA"
+        },
+        "instruction":{
+            "title":"Instrukcja",
+            "line1":"Zmienne:",
+            "line2":" A-Z lub a-z",
+            "line3":"Negacja:",
+            "line4": "/",
+            "line5":"Przykładowa funkcja KPS:",
+            "line6": "ABC+/ABC+A/BC",
+            "line7":"Przykładowa funkcja KPI:", 
+            "line8":"(A+B+C)*(/A+B+C)*(A+/B+C)",
+            "line9":"*nie wszystkie przypadki złej składni są uwzględnione, dla większej kontroli w konsoli przeglądarki (Ctrl+Shift+I) wyswietlane są zmapowane zmienne i wyrażenia"
+        },
+        "modals":{
+            "stored":"Zapisano",
+            "deleted":"Usunięto"
+        },
+        "about":{
+            "title":"GRAFICZNA PREZENTACJA FUNKCJI LOGICZNYCH W FORMIE DIAGRAMÓW BDD",
+            "purposeOfWork":"Cel pracy",
+            "purposeOfWorkText1":"Projekt i implementacja oprogramowania przeznaczonego do graficznej prezentacji funkcji logicznych w formie diagramów BDD, OBDD i ROBDD.",
+            "about":"O aplikacji",
+            "aboutText1":"Aplikacja powstała w ramach pracy dyplomowej inżynierskiej na kierunku Informatyka na Wydział Informatyki, Elektrotechniki i Automatyki - Uniwesytet Zielonogórski. Celem aplikacji jest budowa diagramów OBDD i ROBDD na podstwie podanej przez użytkownika funkcji logicznej w postaci KPS lub KPI. Wynikową działania jest również budowa tablicy prawdy w układzie kodu binarnego.",
+            "tech":"Technologie / Biblioteki",
+            "tools":"Narzędzia",
+            "links":"Linki",
+            "author":"Autor:",
+            "study":"Kierunek studiów:",
+            "supervisor":"Promotor:",
+            "faculty":"Wydział:",
+            "college":"Uczelnia:",
+            "collageName":"Uniwersytet Zielonogórski",
+            "defense":"Obrona:",
+            "author1":"inż. Jakub Błaszyk",
+            "study1":"Informatyka",
+            "supervisor1":"dr inż. Jacek Tkacz",
+            "faculty1":"Wydział Inforamtyki, Elektrotechniki i Automatyki ",
+            "defense1":"Semestr zimowy 2022-2023"
+
+
+
+        }
+    }
+}

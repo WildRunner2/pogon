@@ -1,0 +1,113 @@
+{
+    "translation":{
+        "menu":{
+            "diagrams":"Diagrams",
+            "theory":"Theory",
+            "about":"About",
+            "contact":"Contact",
+            "logIn":"Login"
+
+        },
+        "login":{
+            "send": "Send",
+            "email":"Email Address",
+            "password":"Password",
+            "confirmPassword":"Confirm Password",
+            "logIn":"Login",
+            "register":"register",
+            "reset":"reset password",
+            "emailsent":", the email has been sent.",
+            "thanks":"Thank you ",
+            "emailsentF":"Message sending failed, please try again later.",
+            "regPageTitle":"Register"
+            
+        },
+        "contact":{
+            "send": "Send",
+            "email":"Email Address",
+            "name":"Your Name",
+            "textarea":"Your Message",
+            "emailsent":", the email has been sent.",
+            "thanks":"Thank you ",
+            "emailsentF":"Message sending failed, please try again later."
+            
+        },
+        "diagrams":{
+            "function":"Logical function",
+            "functionType":"Function type",
+            "change":"Change variable order (drag'n'drop)",
+            "KPI":"POS",
+            "KPItitle":"Product Of Sum",
+            "KPS":"SOP",
+            "KPStitle":"Sum of Product",
+            "generate":"Genrate",
+            "truthTable":"Truth table"
+        },
+        "fucntionStorage":{
+            "title":"Save/Load function",
+            "saveTitle":"---------- Save ----------",
+            "loadTitle":"---------- Load ----------",
+            "save":"Save",
+            "load":"Load",
+            "delete":"Delete",
+            "function":"Logical function",
+            "functionType":"Function type",
+            "description":"Description",
+            "close":"Close",
+            "KPI":"POS",
+            "KPS":"SOP",
+            "tip":"Show stored functions"
+        },
+        "statusBar":{
+            "statistic":"STATISTICS",
+            "nonTerminal":"Nonterminal nodes quantity",
+            "terminal":"Terminal nodes quantity",
+            "allNodes":"Nodes quantity",
+            "importantNodes":"Terminal important nodes quantity",
+            "edges":"Egdes quantity",
+            "minKPS":"Simplified function",
+            "minKPI":"Simplified function"
+        },
+        "ROBDD":{
+            "tautology":"TAUTOLOGY"
+        },
+        "instruction":{
+            "title":"Manual",
+            "line1":"Variables:",
+            "line2":" A-Z or a-z",
+            "line3":"Negation:",
+            "line4": "/",
+            "line5":"Example of SOP function:",
+            "line6": "ABC+/ABC+A/BC",
+            "line7":"Example of POS function:", 
+            "line8":"(A+B+C)*(/A+B+C)*(A+/B+C)",
+            "line9":"*not all cases of bad syntax are covered, for more control in the browser console (Ctrl+Shift+I) mapped variables and expressions are displayed."
+        },
+        "modals":{
+            "stored":"Saved",
+            "deleted":"Deleted"
+        },
+        "about":{
+            "title":"GRAPHIC PRESENTATION OF LOGICAL FUNCTIONS IN THE FORM OF BDD DIAGRAMS",
+            "purposeOfWork":"Purpose of work",
+            "purposeOfWorkText1":"",
+            "about":"About",
+            "aboutText1":"",
+            "tech":"Tech scope",
+            "tools":"Tools",
+            "links":"Urls",
+            "author":"Author:",
+            "study":"Field of study:",
+            "supervisor":"Supervisor:",
+            "faculty":"Faculty:",
+            "college":"University:",
+            "collageName":"University of Zielona Góra",
+            "defense":"Defense:",
+            "author1":"eng. Jakub Błaszyk",
+            "study1":"Computer Sience",
+            "supervisor1":"PhD eng. Jacek Tkacz",
+            "faculty1":"Faculty of Computer, Electrical and Control Engineering ",
+            "defense1":"Winter semester 2022-2023"
+        }
+    }
+}

@@ -21,8 +21,8 @@ function Variables(strs) {
     const matches = [...strs.matchAll(rx)];
     func = Array.from(matches, m => m[1])
     func.forEach(y => {
-      var g = String(y)
-      for (var c of g) {
+      let g = String(y)
+      for (let c of g) {
         if (c !== '*' && c !== '/' && c !== '+') {
           if (variables.includes(c)) {
           } else {
@@ -53,9 +53,9 @@ function Expressions(strs, functionType, variables) {
     rx = /\(([^()]*)\)/g;
   }
   
-  var strs1 = []
+  let strs1 = []
   strs1.push(strs)
-  var func = []
+  let func = []
 
   strs1.forEach(x => {
     const matches = [...x.matchAll(rx)];
@@ -63,15 +63,15 @@ function Expressions(strs, functionType, variables) {
   });
   let func2 = []
   func.forEach(element =>{
-    var expTemp = Array.from(element)
-    var funcTemp = ""
-    for(var ff=0;ff<variables.length; ff++){
-      for(var kk=0; kk<expTemp.length; kk++){
-        if(expTemp[kk]===variables[ff]){
-          if(expTemp[kk-1]==='/'){
-            funcTemp = funcTemp + "/"+ expTemp[kk]
+    let expTemp = Array.from(element)
+    let funcTemp = ""
+    for(let i=0; i<variables.length; i++){
+      for(let j=0; j<expTemp.length; j++){
+        if(expTemp[j]===variables[i]){
+          if(expTemp[j-1]==='/'){
+            funcTemp = funcTemp + "/"+ expTemp[j]
           } else {
-            funcTemp = funcTemp + expTemp[kk]
+            funcTemp = funcTemp + expTemp[j]
           }
         }
       }
@@ -118,35 +118,35 @@ function ExprTotrueKey(expressions,varMap, newVarMap, userVarMap, functionType) 
   })
   
   let exptrue = []
-  for (var ii = 0; ii < matches.length; ii++) {
-    for (var jj = 0; jj < matches[ii].length; jj++) {
-      let index = matches[ii][jj].index - 1;
-      let text = String(expressions[ii])
+  for (let i = 0; i < matches.length; i++) {
+    for (let j = 0; j < matches[i].length; j++) {
+      let index = matches[i][j].index - 1;
+      let text = String(expressions[i])
       let subS = text.substring(index, index + 1)
     
       if (subS === '/') {
-        if (exptrue[ii] === undefined) {
-          exptrue[ii] = nextV01 //"0"
+        if (exptrue[i] === undefined) {
+          exptrue[i] = nextV01 //"0"
         } else {
-          exptrue[ii] = exptrue[ii] + nextV01 //"0"
+          exptrue[i] = exptrue[i] + nextV01 //"0"
         }
       } else {
-        if (exptrue[ii] === undefined) {
-          exptrue[ii] = nextV10 //"1"
+        if (exptrue[i] === undefined) {
+          exptrue[i] = nextV10 //"1"
         } else {
-          exptrue[ii] =  exptrue[ii] + nextV10  //"1"
+          exptrue[i] =  exptrue[i] + nextV10  //"1"
         }
       }
     }
   }
   const missingMap = new Map()
-  for (var iii = 0; iii < expressions.length; iii++) {
+  for (let i = 0; i < expressions.length; i++) {
     let missing = []
-    for (var jjj = 0; jjj < varMap.size; jjj++) {
-      if (String(expressions[iii]).includes(varMap.get(jjj + 1))) {
+    for (let j = 0; j < varMap.size; j++) {
+      if (String(expressions[i]).includes(varMap.get(j + 1))) {
       } else {
-        missing.push(jjj + 1)
-        let key = String(iii)
+        missing.push(j + 1)
+        let key = String(i)
         let strMissing = String(missing).replace(/,/g, '')
         missingMap.set(key, strMissing)
       }
@@ -159,15 +159,15 @@ function ExprTotrueKey(expressions,varMap, newVarMap, userVarMap, functionType) 
     
     let value = exptrue[key]
     let miss = []
-    for (var iiii = (Math.pow(2, String(element).length) - 1); iiii >= 0; iiii--) {
+    for (var i = (Math.pow(2, String(element).length) - 1); i >= 0; i--) {
       let k = 0
-      miss[iiii] = value
-      for (var jjjj = (String(element).length - 1); jjjj >= 0; jjjj--) {
-        k = element[((jjjj - String(element).length) * -1) - 1]
-        let val  = (iiii & Math.pow(2, jjjj)) ? "1" : "0"
-        miss[iiii] = String(miss[iiii]).slice(0, k - 1) + val + String(miss[iiii]).slice(k - 1, String(miss[iiii]).length)
+      miss[i] = value
+      for (var j = (String(element).length - 1); j >= 0; j--) {
+        k = element[((j - String(element).length) * -1) - 1]
+        let val  = (i & Math.pow(2, j)) ? "1" : "0"
+        miss[i] = String(miss[i]).slice(0, k - 1) + val + String(miss[i]).slice(k - 1, String(miss[i]).length)
       }
-      keysToSet.push(miss[iiii])
+      keysToSet.push(miss[i])
     }
   })
   exptrue.forEach(element => {
@@ -176,14 +176,14 @@ function ExprTotrueKey(expressions,varMap, newVarMap, userVarMap, functionType) 
     }
   })
   let keysToSet2 = []
-  for (var ik = 0; ik < keysToSet.length; ik++) {
-    let charArr = keysToSet[ik].split('')
+  for (let i = 0; i < keysToSet.length; i++) {
+    let charArr = keysToSet[i].split('')
     let charArr2 = []
 
-    for (var jk = 0; jk < charArr.length; jk++) {
-      let v2 = charArr[userVarMap.get(jk + 1) - 1]
+    for (let j = 0; j < charArr.length; j++) {
+      let v2 = charArr[userVarMap.get(j + 1) - 1]
     
-      charArr2[jk] = v2
+      charArr2[j] = v2
     }
     keysToSet2.push(String(charArr2).replace(/,/g, ''))
   }
@@ -231,9 +231,9 @@ function Diagrams(props) {
   
   
   // eslint-disable-next-line
-  const [language, setLanguage] = useState('pl')
+  const [language, setLanguage] = useState(props.language)
   
-  let lang = pl
+  let lang = en
   
     if(language === 'pl'){
       lang = pl
@@ -244,7 +244,7 @@ function Diagrams(props) {
   
   
   const localS = []
-  localStorage.clear()
+  //localStorage.clear()
     const arr = Array.from(logFunctions.logFunctions)
   arr.forEach( (element, index) => {
     if(localStorage.length < 3){
@@ -254,25 +254,25 @@ function Diagrams(props) {
   })
   const locSort = []
   const locSort2 = new Map() 
-  for (var id = 0; id < localStorage.length; id++){
-    locSort.push(localStorage.key(id))
-    locSort2.set(localStorage.key(id), localStorage.getItem(localStorage.key(id)))
+  for (let i = 0; i < localStorage.length; i++){
+    locSort.push(localStorage.key(i))
+    locSort2.set(localStorage.key(i), localStorage.getItem(localStorage.key(i)))
   }
   locSort.sort()
   localStorage.clear()
   locSort.forEach(element =>{
     localStorage.setItem(element, locSort2.get(element))
   })
-  for ( var is = 0; is < locSort.length; is++){
-    localS.push(localStorage.getItem(locSort[is]));
+  for ( let i = 0; i < locSort.length; i++){
+    localS.push(localStorage.getItem(locSort[i]));
    
   }
   
   const fucArr = []
   const handleGetSaved = (event) =>{
     event.preventDefault()
-    let ir = parseInt(event.currentTarget.id)
-    let body = JSON.parse(localS[ir]).body
+    let i = parseInt(event.currentTarget.id)
+    let body = JSON.parse(localS[i]).body
     //let type = JSON.parse(localS[i]).type
     document.getElementById("funkcjaLogiczna").value = body
     // if(type === "KPS"){
@@ -292,8 +292,8 @@ function Diagrams(props) {
     event.preventDefault()
     localStorage.removeItem(event.currentTarget.id)
     localS.length = 0
-    for (var it = 0; it < locSort.length; it++){
-      localS.push(localStorage.getItem(localStorage.key(locSort[it])));
+    for (var i = 0; i < locSort.length; i++){
+      localS.push(localStorage.getItem(localStorage.key(locSort[i])));
     }
     
     setShow5(true)
@@ -346,8 +346,8 @@ function Diagrams(props) {
       Generowanie fukcji powyżej 12 zmienny może spowodować zawieszenie programu</p>)
     } 
     const varMap = new Map()
-    for (var iq = 1; iq < variables.length + 1; iq++) {
-      varMap.set(iq, variables[iq - 1])
+    for (let i = 1; i < variables.length + 1; i++) {
+      varMap.set(i, variables[i - 1])
     }
     const dragVar = []
     varMap.forEach((value, key) => {
@@ -643,12 +643,13 @@ function Diagrams(props) {
     {loading===12 ? (
         
       <div className="d-flex justify-content-center align-self-center ">
-        <div className="aagg">      
+        <div className="aagg">
+      
       </div>
       </div>
    
   ) : (<div></div>)}
-    <div id="conteinerFull" className={loading===12 ? "hide" : "visiable"}>
+    <div id="diagrams_container" className={loading===12 ? "hide" : "visiable"}>
     <h3>{lang.translation.about.title}</h3>
       <div id="min1"className="container diagra">
         <form id="contactForm" onSubmit={handleSubmit}>
@@ -670,11 +671,11 @@ function Diagrams(props) {
             </div>
           </div>
           <label>{lang.translation.diagrams.change}</label>
-          <div className='d-flex justify-content-center ff' >
+          <div className='d-flex justify-content-center' >
             {varItems.map((item, index) => (
               <div
                 key={index}
-                className="list-item"
+                className="drag_n_drop_items"
                 draggable
                 onDragStart={(e) => {(dragItem.current = index)}}
                 onDragEnter={(e) => {e.preventDefault()
@@ -688,8 +689,8 @@ function Diagrams(props) {
           </div>
                   
          
-            <button title={lang.translation.diagrams.generate} className="btn btn-secondary  btn-lg button3" id="submitButton"  type="submit">{lang.translation.diagrams.generate}</button>
-            <button className="btn btn-success button4" title={lang.translation.fucntionStorage.tip} onClick={storedFunctions} type="submit"><FontAwesomeIcon icon={faListUl}/></button>
+            <button title={lang.translation.diagrams.generate} className="diagrams_submit_button" id="submitButton"  type="submit">{lang.translation.diagrams.generate}</button>
+            <button className="diagrams_storage_button" title={lang.translation.fucntionStorage.tip} onClick={storedFunctions} type="submit"><FontAwesomeIcon icon={faListUl}/></button>
           
         </form>
       

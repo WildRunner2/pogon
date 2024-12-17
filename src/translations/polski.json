@@ -59,11 +59,11 @@
         },
         "statusBar":{
             "statistic":"STATYSTYKI",
-            "nonTerminal":"Ilość węzłów nieterminalowych",
-            "terminal":"Ilość węzłów terminalowych",
-            "allNodes":"Ilość węzłów razem",
-            "importantNodes":"Ilość węzłów terminalowych znaczących",
-            "edges":"Ilość krawędzi",
+            "nonTerminal":"Węzły nieterminalowe",
+            "terminal":"Węzły terminalowe",
+            "allNodes":"Węzły razem",
+            "importantNodes":"Węzły terminalowe znaczących",
+            "edges":"Krawędzie",
             "minKPS":"funkcja uproszczona",
             "minKPI":"funkcja uproszczona"
         },

@@ -2,7 +2,7 @@ import React from 'react';
 import Graph from "react-graph-vis";
 
 import  pl from '../translations/polski.json'
-//import  en from '../translations/english.json'
+import  en from '../translations/english.json'
 
 function splitMap(map, side){
   const tempMap1 = new Map()
@@ -254,7 +254,7 @@ function Robdd(props){
   if(language === 'pl'){
     lang = pl
   }else{
-    lang = pl
+    lang = en
   }
   
   let n = 1
@@ -447,11 +447,11 @@ function Robdd(props){
             />
           <div className="stats">
               <label className="stat1">{lang.translation.statusBar.statistic}: </label>
-              <label className="stat1">{lang.translation.statusBar.nonTerminal}: <label className='stat2'>{countNonTerminalNodes}</label></label>
-              <label className="stat1">{lang.translation.statusBar.terminal}: <label className='stat2'>{countTerminalNodes}</label></label>
-              <label className="stat1">{lang.translation.statusBar.allNodes}: <label className='stat2'>{countNodes}</label></label>
-              <label className="stat1">{lang.translation.statusBar.importantNodes} ({functionTitle}): <label className='stat2'>{countNodesTerminalImportant}</label></label>
-              <label className="stat1">{lang.translation.statusBar.edges}: <label className='stat2'>{countEdges}</label></label>
+              <label className="stat1">{lang.translation.statusBar.nonTerminal}<label className='stat2'>({countNonTerminalNodes}),</label></label>
+              <label className="stat1">{lang.translation.statusBar.terminal}<label className='stat2'>({countTerminalNodes}),</label></label>
+              <label className="stat1">{lang.translation.statusBar.allNodes}<label className='stat2'>({countNodes}),</label></label>
+              <label className="stat1">{lang.translation.statusBar.importantNodes} {functionTitle}<label className='stat2'>({countNodesTerminalImportant}),</label></label>
+              <label className="stat1">{lang.translation.statusBar.edges}<label className='stat2'>({countEdges})</label></label>
             </div>
         </div>
       );

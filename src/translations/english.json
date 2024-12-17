@@ -60,11 +60,11 @@
         },
         "statusBar":{
             "statistic":"STATISTICS",
-            "nonTerminal":"Nonterminal nodes quantity",
-            "terminal":"Terminal nodes quantity",
-            "allNodes":"Nodes quantity",
-            "importantNodes":"Terminal important nodes quantity",
-            "edges":"Egdes quantity",
+            "nonTerminal":"Nonterminal nodes",
+            "terminal":"Terminal nodes",
+            "allNodes":"Nodes",
+            "importantNodes":"Terminal important nodes",
+            "edges":"Egdes",
             "minKPS":"Simplified function",
             "minKPI":"Simplified function"
         },
@@ -88,7 +88,7 @@
             "deleted":"Deleted"
         },
         "about":{
-            "title":"GRAPHIC PRESENTATION OF LOGICAL FUNCTIONS IN THE FORM OF BDD DIAGRAMS",
+            "title":"BDD/ROBDD DIAGRAMS",
             "purposeOfWork":"Purpose of work",
             "purposeOfWorkText1":"",
             "about":"About",

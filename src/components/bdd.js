@@ -2,7 +2,7 @@ import React from 'react';
 import Graph from "react-graph-vis";
 
 import  pl from '../translations/polski.json'
-//import  en from '../translations/english.json'
+import  en from '../translations/english.json'
 
 
 function getByValue(map, searchValue) {
@@ -111,7 +111,7 @@ function Bdd(props){
   if(language === 'pl'){
     lang = pl
   }else{
-    lang = pl
+    lang = en
   }
   // variable nodes - nonterminal
   for(let i=Math.pow(2,(newVarMap.size-1)); i>=0; i--){
@@ -303,20 +303,13 @@ function Bdd(props){
           />
           <div className="stats">
               <label className="stat1">{lang.translation.statusBar.statistic}: </label>
-              <label className="stat1">{lang.translation.statusBar.nonTerminal}: <label className='stat2'>{countNonTerminalNodes}</label></label>
-              <label className="stat1">{lang.translation.statusBar.terminal}: <label className='stat2'>{countTerminalNodes}</label></label>
-              <label className="stat1">{lang.translation.statusBar.allNodes}: <label className='stat2'>{countNodes}</label></label>
-              <label className="stat1">{lang.translation.statusBar.importantNodes} ({functionTitle}): <label className='stat2'>{countNodesTerminalImportant}</label></label>
-              <label className="stat1">{lang.translation.statusBar.edges}: <label className='stat2'>{countEdges}</label></label>
+              <label className="stat1">{lang.translation.statusBar.nonTerminal}<label className='stat2'>({countNonTerminalNodes}),</label></label>
+              <label className="stat1">{lang.translation.statusBar.terminal}<label className='stat2'>({countTerminalNodes}),</label></label>
+              <label className="stat1">{lang.translation.statusBar.allNodes}<label className='stat2'>({countNodes}),</label></label>
+              <label className="stat1">{lang.translation.statusBar.importantNodes} {functionTitle}<label className='stat2'>({countNodesTerminalImportant}),</label></label>
+              <label className="stat1">{lang.translation.statusBar.edges}<label className='stat2'>({countEdges})</label></label>
             </div>
-            {/* <div className="stats" >
-              <label className="stat1">STATYSTYKI </label>
-              <label className="stat1">Ilość węzłów nieterminalowych: {countNonTerminalNodes}</label>
-              <label className="stat1">Ilość węzłów terminalowych: {countTerminalNodes}</label>
-              <label className="stat1">Ilość węzłów razem: {countNodes}</label>
-              <label className="stat1">Ilość węzłów terminalowych znaczących ({functionType}): {countNodesTerminalImportant}</label>
-              <label className="stat1">Ilość krawędzi: {countEdges}</label>
-            </div> */}
+            
             
           
         </div>

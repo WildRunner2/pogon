@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebook, faLinkedin } from "@fortawesome/free-brands-svg-icons";
+import { /*faFacebook, */ faLinkedin } from "@fortawesome/free-brands-svg-icons";
 
 const Home = () => 
   
@@ -9,7 +9,7 @@ const Home = () =>
       <div className="home">
       
         <div className="about_me">
-          <h2>WELCOME</h2>
+          <h1>WELCOME</h1>
           <p>My name is Jakub, I am a software engineer. <br></br>I work as a .Net developer in a company producing ERP systems.</p>
           <p>This is my personal website where I host my web applications and data.</p>
           <p>On this web you can use the BDD diagrams generator application that I created for my engineering thesis defense.</p>

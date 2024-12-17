@@ -12,7 +12,7 @@ const Layout = () => {
     const [toggleIcon, setToggleIcon] = useState(<FontAwesomeIcon  icon={faBars}></FontAwesomeIcon>)
     const [dropClass, setDropClass] = useState("dropdown_menu")
     const { width } = useWindowDimensions();
-    function openF(){        
+    function openF(){   
         if(open){
             setOpen(false)
             setDropClass("dropdown_menu")
@@ -51,12 +51,12 @@ const Layout = () => {
                 </div>
             </div>
             <div className={dropClass}>
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/diagrams">BDD</Link></li>
-                <li><Link to="/sqlscripts">SqlScripts</Link></li>
-                <li><Link to="/3dprints">3d</Link></li>                 
-                <li><Link to="/contact">Contact</Link></li>   
-                <li><Link className="action_btn" to="/users">Login</Link></li>
+                <li><Link onClick={openF} to="/">Home</Link></li>
+                <li><Link onClick={openF} to="/diagrams">BDD</Link></li>
+                <li><Link onClick={openF} to="/sqlscripts">SqlScripts</Link></li>
+                <li><Link onClick={openF} to="/3dprints">3d</Link></li>                 
+                <li><Link onClick={openF} to="/contact">Contact</Link></li>   
+                <li><Link onClick={openF} className="action_btn_open" to="/users">Login</Link></li>
             </div>
         </header>
         

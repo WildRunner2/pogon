@@ -650,7 +650,7 @@ function Diagrams(props) {
    
   ) : (<div></div>)}
     <div id="diagrams_container" className={loading===12 ? "hide" : "visiable"}>
-    <h3>{lang.translation.about.title}</h3>
+    <h1 className="diagrams_title">{lang.translation.about.title}</h1>
       <div id="min1"className="container diagra">
         <form id="contactForm" onSubmit={handleSubmit}>
           <div className="mb-3">

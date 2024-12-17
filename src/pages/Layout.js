@@ -42,10 +42,10 @@ const Layout = () => {
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/diagrams">BDD</Link></li>
                     <li><Link to="/sqlscripts">SqlScripts</Link></li>
-                    <li><Link to="/3dprint">3d</Link></li>                 
+                    <li><Link to="/3dprints">3d</Link></li>                 
                     <li><Link to="/contact">Contact</Link></li>                    
                 </ul>
-                <Link className="action_btn" to="/user">GetStarted</Link>
+                <Link className="action_btn" to="/users">Login</Link>
                 <div className="toggle_btn" onClick={openF}>
                     <i>{toggleIcon}</i>
                 </div>
@@ -54,9 +54,9 @@ const Layout = () => {
                 <li><Link to="/">Home</Link></li>
                 <li><Link to="/diagrams">BDD</Link></li>
                 <li><Link to="/sqlscripts">SqlScripts</Link></li>
-                <li><Link to="/3dprint">3d</Link></li>                 
+                <li><Link to="/3dprints">3d</Link></li>                 
                 <li><Link to="/contact">Contact</Link></li>   
-                <li><Link className="action_btn" to="/user">GetStarted</Link></li>
+                <li><Link className="action_btn" to="/users">Login</Link></li>
             </div>
         </header>
         

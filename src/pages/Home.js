@@ -1,33 +1,34 @@
-const Home = () => {
-    return <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec elementum interdum nulla, a hendrerit diam gravida sed. Morbi sed finibus est. Vivamus vestibulum condimentum nunc, ut laoreet est. Proin tellus tellus, blandit in eros vel, auctor iaculis metus. Aliquam congue nisi quam, eget egestas urna feugiat non. Aenean placerat lacinia sapien vitae dictum. Duis congue ante non nibh congue, pellentesque convallis massa accumsan. Donec mollis ipsum aliquam mauris posuere, eu imperdiet tellus porttitor. Curabitur porttitor neque lobortis, luctus metus vel, faucibus lectus. Proin tempus auctor lacus eget auctor. Aenean feugiat sagittis vulputate. Duis sodales maximus dolor eget auctor. Donec scelerisque tincidunt egestas.
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFacebook, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 
-    Pellentesque ultricies convallis pharetra. Suspendisse rhoncus velit ut tortor tempus fringilla. Morbi blandit facilisis turpis ut laoreet. Integer aliquet congue faucibus. In rhoncus porttitor elit ac sodales. Morbi metus elit, ullamcorper eget turpis nec, auctor ullamcorper ligula. In tortor velit, congue vel arcu et, rhoncus efficitur sem. Vivamus porttitor bibendum elit, eget mollis est. Nullam suscipit finibus massa. Vestibulum est orci, dignissim id enim id, cursus euismod sem. Duis accumsan lorem non lectus posuere, ac vestibulum augue accumsan. Proin efficitur ex quis nisi gravida, id luctus metus semper. Sed eget gravida massa, ac rutrum dui.
-    
-    Fusce porta metus sed ante laoreet fermentum. Duis ac mauris sollicitudin, molestie libero ut, molestie odio. Donec porta tortor risus, quis tincidunt ligula blandit sit amet. Ut tempus leo nec laoreet rhoncus. Vestibulum eget est sed leo congue tempus id eget eros. Etiam sagittis lacus quis dapibus venenatis. Quisque tortor lacus, imperdiet rhoncus efficitur id, congue eget odio.
-    
-    Aliquam sodales pulvinar metus, eu pharetra velit aliquet et. Ut ullamcorper ante vitae arcu aliquet fermentum quis sed lorem. Curabitur semper lorem ac condimentum imperdiet. Nunc ac mauris at arcu rutrum gravida luctus a orci. Sed diam neque, consectetur eget tristique sed, dictum quis urna. Aenean interdum arcu at tempor pellentesque. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed molestie quam ut euismod hendrerit. Mauris non velit molestie, accumsan felis sit amet, vehicula justo.
-    
-    Nulla eu odio pellentesque, semper ante a, placerat mi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Aenean sapien leo, iaculis in lacus eu, sollicitudin venenatis leo. Integer ante erat, auctor id posuere in, venenatis id risus. Etiam pellentesque ipsum quis enim finibus, vel rutrum quam placerat. Aenean eleifend tincidunt faucibus. Duis vel enim elit. Cras a mi consectetur, sodales orci nec, porta felis. Integer et massa sit amet lorem tempor finibus eu sed tellus. Praesent nibh lectus, mattis in metus a, dapibus finibus arcu. Maecenas vitae tincidunt tortor, in semper orci. Mauris fermentum mi eu risus placerat eleifend. Aenean placerat libero id massa tincidunt dignissim. Duis ac imperdiet ligula. Pellentesque ac ex vel massa vestibulum varius.
-    
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin sodales venenatis tincidunt. Vivamus eu purus ut metus pharetra sodales eget et turpis. Nulla facilisi. Quisque bibendum eros sit amet urna sodales, vel convallis nisi congue. Nullam et massa sed mi dapibus posuere. Vivamus ut libero gravida quam congue efficitur eget vel massa.
-    
-    Donec tempor quam nec nunc vestibulum, sit amet faucibus tellus porta. Fusce quis dictum turpis, eget tristique dolor. Proin et erat augue. Suspendisse iaculis, urna in maximus molestie, tortor elit tempor ex, in blandit metus mi id elit. Etiam ut scelerisque diam, sed varius dolor. Fusce eget rutrum odio, eu tincidunt purus. Aliquam sit amet gravida orci, quis luctus augue. Integer tincidunt, massa eu semper pulvinar, elit mi accumsan tortor, in posuere augue dui vitae massa. Duis consequat magna id ultrices vestibulum. Donec id auctor metus. Vivamus id suscipit odio, eu dapibus diam. Suspendisse dignissim finibus aliquet. Donec mollis sodales purus aliquam luctus.
-    
-    Suspendisse potenti. Aliquam erat volutpat. In maximus velit sit amet dui lacinia, sed pharetra lacus hendrerit. Proin vitae orci sed est vulputate consectetur sit amet ut odio. Pellentesque dui dolor, bibendum eu suscipit a, hendrerit in ipsum. Etiam sed nulla nec mauris malesuada vehicula. Praesent ut mi a urna placerat pharetra vitae at odio. Donec interdum dui vitae lorem commodo ultrices.
-    
-    Nullam bibendum aliquam leo, nec viverra urna efficitur eget. Integer laoreet nec turpis in posuere. Pellentesque imperdiet diam gravida ipsum sollicitudin posuere. Vestibulum posuere nunc eros, eu pharetra arcu gravida eu. Morbi imperdiet erat non interdum consectetur. Donec non volutpat massa, sed scelerisque mauris. Duis sed ex id mauris blandit dapibus nec in orci. Fusce diam nisl, imperdiet quis ultricies in, porttitor sit amet nunc.
-    
-    Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Aliquam erat volutpat. Aenean orci erat, lacinia non neque non, faucibus molestie ante. Cras at congue enim. Nullam vestibulum sem vitae massa lobortis pharetra. Nulla iaculis metus et ex eleifend, vel egestas felis mollis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;
-    
-    Maecenas egestas luctus nisl ac sollicitudin. Aenean vel tellus quam. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Praesent malesuada urna vel eleifend euismod. Aenean rutrum sem cursus purus tincidunt feugiat. Suspendisse potenti. Quisque ultrices ligula sed neque pulvinar mollis. Quisque pretium sapien id dignissim tincidunt. Donec at neque faucibus, mollis nisi non, eleifend mauris. Sed nec semper diam, ut placerat augue. In fringilla metus elit, sit amet dictum metus hendrerit vel. Curabitur ut ipsum ac lacus maximus tempor quis quis mauris. Sed pretium eros ut aliquet aliquam.
-    
-    Curabitur ac porta velit. Pellentesque a leo libero. Nam elit arcu, egestas sit amet consequat a, placerat sit amet enim. Nunc id diam vel dolor placerat fermentum. Praesent malesuada, libero ut congue mollis, ex eros iaculis tellus, non consectetur erat erat nec ligula. Nam placerat, urna et vestibulum interdum, libero turpis aliquam tellus, nec rhoncus dui risus quis justo. Proin et rutrum nisi. Nunc venenatis turpis vitae massa ullamcorper, id condimentum sapien eleifend. Aliquam ac luctus risus. Maecenas nunc nisl, tristique nec faucibus imperdiet, mattis vitae orci.
-    
-    Aenean in turpis venenatis, suscipit nulla eget, consectetur elit. Aenean finibus vel ex non tincidunt. Duis posuere dui eget ipsum pellentesque pretium. Suspendisse vel maximus lorem, feugiat sodales tortor. Aenean vel nulla lacinia, elementum mauris sed, feugiat risus. Nulla in interdum felis, sit amet blandit orci. Integer iaculis dictum diam eget vehicula. Etiam feugiat vitae dui sed placerat.
-    
-    Vestibulum viverra, felis at fermentum consectetur, quam neque commodo nibh, eget porttitor nulla est nec orci. Donec nulla ipsum, dictum sed mi id, ultricies ultrices massa. Donec scelerisque eleifend libero posuere elementum. Ut mollis imperdiet augue, sit amet tincidunt mi tempor ornare. Aliquam id odio faucibus, vestibulum tortor eu, volutpat est. Duis eleifend ante auctor fringilla volutpat. Aliquam sit amet vehicula felis. Donec eget faucibus tortor. Sed non ligula quis nisi placerat fringilla. Integer condimentum eu sapien dignissim volutpat. Praesent malesuada, tellus posuere pharetra tincidunt, nunc orci molestie massa, ac euismod ex mi eu purus. Vivamus id erat commodo, consequat elit eu, commodo mi. Pellentesque rhoncus felis vitae ex congue tincidunt. Suspendisse iaculis, felis at mollis molestie, metus nibh egestas lectus, non mollis massa eros eu tellus.
-    
-    Vivamus ultricies quis leo eget vehicula. Nullam eget eleifend mi. Nullam at justo eleifend, tristique tellus ac, feugiat justo. Nullam ut ex ipsum. Mauris ultrices arcu tortor, vel iaculis diam lobortis ac. Fusce accumsan turpis ac purus fermentum ornare. Quisque egestas maximus turpis, sed imperdiet enim pharetra quis. Integer convallis diam ac risus dictum, id placerat ipsum pulvinar. Vivamus quis scelerisque mi. Duis rutrum, dolor a dictum pretium, nulla erat tempor massa, in vulputate neque lectus nec arcu. Pellentesque feugiat nisi convallis cursus fringilla. Proin nec tortor accumsan, blandit elit ut, pulvinar orci. Sed non neque vel augue eleifend rhoncus. Duis at mauris orci. Integer libero sapien, tincidunt at pellentesque at, scelerisque vel libero.</p>;
+const Home = () => 
+  
+  
+  {
+    return (
+      <div className="home">
+      
+        <div className="about_me">
+          <h2>WELCOME</h2>
+          <p>My name is Jakub, I am a software engineer. <br></br>I work as a .Net developer in a company producing ERP systems.</p>
+          <p>This is my personal website where I host my web applications and data.</p>
+          <p>On this web you can use the BDD diagrams generator application that I created for my engineering thesis defense.</p>
+          <p>I'm also working on a web service for storing SQL queries.</p>
+          <p>Also as a fan of 3D printing, I will try to share my knowledge and maybe some 3D projects.</p>
+          <p></p>
+          <p>I am still working on the look and functionality of this site, so please keep in mind.</p>
+        </div>
+        <div>
+          {// eslint-disable-next-line
+           }
+          {/* <a href="#"><FontAwesomeIcon className="social_m_icon" icon={faFacebook}></FontAwesomeIcon></a> */}
+          <a href="https://www.linkedin.com/in/jakub-b%C5%82aszyk-487266156/"><FontAwesomeIcon className="social_m_icon"icon={faLinkedin}></FontAwesomeIcon></a>
+          
+        </div>
+
+      </div>
+    )    
+       
   };
   
   export default Home;

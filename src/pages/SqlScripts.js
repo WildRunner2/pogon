@@ -1,5 +1,12 @@
 const SqlScripts = () => {
-    return <h1>SqlScripts</h1>;
+    return (
+    <div className="sqlscripts">
+      <h1>SqlScripts</h1>
+      <p>app in development</p>
+    </div>
+    
+  
+  )
   };
   
   export default SqlScripts;

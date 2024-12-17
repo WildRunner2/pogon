@@ -369,7 +369,7 @@ function Diagrams(props) {
       descVal = descVal.slice(0,30)+" ..."
     }
     fucArr.push(        
-      <div key={index} className="row ">
+      <div key={index} className="row fuction_modal">
         <div className="col-6">
         <button title={lang.translation.fucntionStorage.load} id={index} onClick={handleGetSaved} onChange={handleChange} className='btn btn-secondary modalPlusBtn'><FontAwesomeIcon icon={faPlus} /></button>
           <label title={value.body}>{bodyVal}</label>

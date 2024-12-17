@@ -131,6 +131,7 @@ header{
     margin-top: 60px;
     color: #fff;
     background-color: rgba(148, 148, 147, 0.671);
+    text-align: center;
    
 }
 /* DIAGRAMS */
@@ -183,6 +184,10 @@ header{
 }
 .diagrams_storage_button:hover{
     background-color: #000
+}
+
+.diagra{
+    padding: 30px;
 }
 
 
@@ -257,6 +262,72 @@ header{
 
 }
 
+/* SQL SCRIPTS */
+
+.sqlscripts{
+    max-width: 500px;
+    justify-content: center;
+    margin: auto;
+    padding: 30px;
+}
+
+/* 3D PRINTS */
+
+.threedeeprints{
+    /* max-width: 500px; */
+    justify-content: center;
+    margin: auto;
+    padding: 30px;
+}
+
+/* NO PAGE */
+
+.no_page{
+    max-width: 500px;
+    justify-content: center;
+    margin: auto;
+    padding: 30px;
+}
+
+/* HOME */
+
+.about_me h2{
+    text-align: center;
+}
+.about_me {
+    text-align: left;
+}
+
+.home{
+    max-width: 500px;
+    justify-content: center;
+    margin: auto;
+    padding: 30px;
+}
+.social_m_icon{
+    font-size: 2.5rem;
+    padding: 10px;
+}
+
+/* MYMODAL */
+
+.modal-content{
+}
+
+.fuction_modal{
+    margin-top: 60px;
+}
+
+
+/* USERS */
+
+.users{
+    
+    justify-content: center;
+    margin: auto;
+    padding: 30px;
+}
+
 /* BDD */
 
 .parent{
@@ -276,6 +347,15 @@ header{
 
 .parent .stats label{
     margin-left: 4px;
+}
+
+/* CONTACT */
+
+.contact_form{
+ max-width: 500px;
+ justify-content: center;
+ margin: auto;
+ padding: 30px;
 }
 
 

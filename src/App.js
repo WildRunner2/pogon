@@ -6,6 +6,8 @@ import Contact from "./pages/Contact";
 import NoPage from "./pages/NoPage";
 import Diagrams from "./pages/diagrams";
 import SqlScripts from "./pages/SqlScripts";
+import ThreeDeePrints from "./pages/3dprints";
+import Users from "./pages/Users";
 import './App.css';
 
 
@@ -20,6 +22,8 @@ function App() {
           <Route path="diagrams" element={<Diagrams />} />
           <Route path="contact" element={<Contact />} />
           <Route path="sqlscripts" element={<SqlScripts />} />
+          <Route path="3dprints" element={<ThreeDeePrints />} />
+          <Route path="users" element={<Users />} />
           <Route path="*" element={<NoPage />} />
         </Route>
       </Routes>

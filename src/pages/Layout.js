@@ -1,71 +1,192 @@
 import { Outlet, Link } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
-import { React, useState, useEffect} from "react";
-import { faBars } from "@fortawesome/free-solid-svg-icons/faBars";
-import { faClose } from "@fortawesome/free-solid-svg-icons";
-import useWindowDimensions from '../hooks/windowDimension';   
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useState, useEffect, useContext } from "react";
+import { faBars, faClose } from "@fortawesome/free-solid-svg-icons";
+import useWindowDimensions from "../hooks/windowDimension";
+import Cookies from "js-cookie"; // Import js-cookie
+import { SessionContext } from "../App";
 
+const Layout = (props) => {
+  const { setSessionData } = useContext(SessionContext);
+  const [open, setOpen] = useState(false);
+  const [open2, setOpen2] = useState(false);
+  const [toggleIcon, setToggleIcon] = useState(<FontAwesomeIcon icon={faBars} />);
+  const [dropClass, setDropClass] = useState("dropdown_menu");
+  const [dropClass2, setDropClass2] = useState("dropdown_menu2");
+  const { width } = useWindowDimensions();
+  const [loginName, setLoginName] = useState("Login");
+  const [logged, setLogged] = useState(false);
+  const [dropLogClass, setDropLogClass] = useState("action_btn");
 
-
-const Layout = () => {
-    const [open, setOpen] = useState(false);
-    const [toggleIcon, setToggleIcon] = useState(<FontAwesomeIcon  icon={faBars}></FontAwesomeIcon>)
-    const [dropClass, setDropClass] = useState("dropdown_menu")
-    const { width } = useWindowDimensions();
-    function openF(){   
-        if(open){
-            setOpen(false)
-            setDropClass("dropdown_menu")
-            setToggleIcon(<FontAwesomeIcon  icon={faBars}></FontAwesomeIcon>)
-        }else{
-            setOpen(true)
-            setDropClass("dropdown_menu_open")
-            setToggleIcon(<FontAwesomeIcon  icon={faClose}></FontAwesomeIcon>)
-        }  
+  useEffect(() => {
+    // Check user cookie to maintain login state across refreshes
+    const userCookie = Cookies.get("user");
+    if (userCookie) {
+      const user = JSON.parse(userCookie);
+      if (user.logged) {        
+        setLoginName(user.login);
+        setDropLogClass("action_btn2");
+        setLogged(true);
+      } else {
+        setLoginName("Login");
+        setLogged(false);
+      }
     }
-    if(width > 992 && open){
-        setOpen(false)
-        setDropClass("dropdown_menu")
-        setToggleIcon(<FontAwesomeIcon  icon={faBars}></FontAwesomeIcon>)
-    }
+  }, []);
 
-    useEffect(() => {
-        
-    },[width])
-     
+  const handleToggleMenu = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleToggleMenu2 = () => {
+    setOpen2((prevOpen) => !prevOpen);
+  };
+
+  const handleToggleMenu3 = () => {
+    if (open2) setOpen2((prevOpen) => !prevOpen);
+  };
+
+  const logout = () => {
+    Cookies.remove("user"); // Remove user cookie
+    setSessionData(null); // Clear session context
+    setLogged(false); // Update logged state
+    setOpen2(false); // Close dropdown
+    setLoginName("Login"); // Reset login name
+    setDropLogClass("action_btn"); // Reset button class
+  };
+
+  useEffect(() => {
+    // Update dropdown and icon state based on the `open` state
+    if (open) {
+      setDropClass("dropdown_menu_open");
+      setToggleIcon(<FontAwesomeIcon icon={faClose} />);
+    } else {
+      setDropClass("dropdown_menu");
+      setToggleIcon(<FontAwesomeIcon icon={faBars} />);
+    }
+  }, [open]);
+
+  useEffect(() => {
+    // Update dropdown state for secondary menu
+    if (open2) {
+      setDropClass2("dropdown_menu_open2");
+    } else {
+      setDropClass2("dropdown_menu2");
+    }
+  }, [open2]);
+
+  useEffect(() => {
+    // Automatically close dropdown menu if width > 992
+    if (width > 992 && open) {
+      setOpen(false);
+    }
+  }, [width, open]);
+
+  console.log(Cookies.get("user")); // Debug: log user cookie
+
   return (
-    <>   
-        <header>
-            <div className="navbar">
-                <div className="logo"><Link to="/">JB</Link></div>
-                <ul className="links">
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/diagrams">BDD</Link></li>
-                    <li><Link to="/sqlscripts">SqlScripts</Link></li>
-                    <li><Link to="/3dprints">3d</Link></li>                 
-                    <li><Link to="/contact">Contact</Link></li>                    
-                </ul>
-                <Link className="action_btn" to="/users">Login</Link>
-                <div className="toggle_btn" onClick={openF}>
-                    <i>{toggleIcon}</i>
-                </div>
-            </div>
-            <div className={dropClass}>
-                <li><Link onClick={openF} to="/">Home</Link></li>
-                <li><Link onClick={openF} to="/diagrams">BDD</Link></li>
-                <li><Link onClick={openF} to="/sqlscripts">SqlScripts</Link></li>
-                <li><Link onClick={openF} to="/3dprints">3d</Link></li>                 
-                <li><Link onClick={openF} to="/contact">Contact</Link></li>   
-                <li><Link onClick={openF} className="action_btn_open" to="/users">Login</Link></li>
-            </div>
-        </header>
-        
-        <div className="container-md main_content">
-            <Outlet/>
+    <>
+      <header>
+        <div className="navbar">
+          <div className="logo">
+            <Link to="/">JB</Link>
+          </div>
+          <ul className="links">
+            <li>
+              <Link onClick={handleToggleMenu3} to="/">
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link onClick={handleToggleMenu3} to="/diagrams">
+                BDD
+              </Link>
+            </li>
+            <li>
+              <Link onClick={handleToggleMenu3} to="/sqlscripts">
+                SqlScripts
+              </Link>
+            </li>
+            <li>
+              <Link onClick={handleToggleMenu3} to="/3dprints">
+                3d
+              </Link>
+            </li>
+            <li>
+              <Link onClick={handleToggleMenu3} to="/contact">
+                Contact
+              </Link>
+            </li>
+          </ul>
+          <Link className={dropLogClass} onClick={logged ? handleToggleMenu2 : ""} to="/users">
+            {loginName}
+          </Link>
+          <div className="toggle_btn" onClick={handleToggleMenu}>
+            <i>{toggleIcon}</i>
+          </div>
         </div>
-        
+        <div className={dropClass2}>
+          {logged && (
+            <>
+              <li>
+                <Link onClick={handleToggleMenu2} to="/user/profile">
+                  User profile
+                </Link>
+              </li>
+              <li>
+                <Link onClick={handleToggleMenu2} to="/users/change">
+                  Change password
+                </Link>
+              </li>
+              <li>
+                <Link onClick={logout} className="action_btn_open">
+                  Logout
+                </Link>
+              </li>
+            </>
+          )}
+        </div>
+        <div className={dropClass}>
+          <li>
+            <Link onClick={handleToggleMenu} to="/">
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link onClick={handleToggleMenu} to="/diagrams">
+              BDD
+            </Link>
+          </li>
+          <li>
+            <Link onClick={handleToggleMenu} to="/sqlscripts">
+              SqlScripts
+            </Link>
+          </li>
+          <li>
+            <Link onClick={handleToggleMenu} to="/3dprints">
+              3d
+            </Link>
+          </li>
+          <li>
+            <Link onClick={handleToggleMenu} to="/contact">
+              Contact
+            </Link>
+          </li>
+          {!logged && (
+            <li>
+              <Link onClick={handleToggleMenu} className="action_btn_open" to="/users">
+                Login
+              </Link>
+            </li>
+          )}
+        </div>
+      </header>
+
+      <div className="container-md main_content">
+        <Outlet />
+      </div>
     </>
-  )
+  );
 };
 
 export default Layout;

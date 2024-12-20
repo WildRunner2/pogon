@@ -13,12 +13,15 @@
             "password":"Hasło",
             "confirmPassword":"Potwierdź Hasło",
             "logIn":"Zaloguj",
-            "register":"Zarejestruj się",
-            "reset":"Zresetuj hasło",
+            "name":"Imię",
+            "register":"Utwórz konto",
+            "reset":"Zresetuj",            
+            "resetEmail":"Adres Email - użyty przy rejestracji",
             "emailsent":", the email has been sent.",
             "thanks":"Thank you ",
             "emailsentF":"Message sending failed, please try again later.",
-            "regPageTitle":"Rejestracja"
+            "regPageTitle":"Rejestracja",
+            "resPageTitle":"Reset hasła"
             
         },
         "contact":{
@@ -57,7 +60,7 @@
             "KPS":"KPS",
             "tip":"Wyświetl zapisane funkcje"
         },
-        "statusBar":{
+        "":{
             "statistic":"STATYSTYKI",
             "nonTerminal":"Węzły nieterminalowe",
             "terminal":"Węzły terminalowe",

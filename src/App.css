@@ -13,6 +13,55 @@ body{
     background-position: cover;
 }
 
+
+/* COOKIES */
+.cookie-popout-container{
+    position: absolute;
+    justify-content: center;
+    text-align: center;
+    padding-left: 25%;
+    padding-right: 25%;
+    padding-top: 5%;
+
+    min-height: 100%;
+    min-width: 100%;
+    background-color:none;
+    position: absolute;
+    
+    justify-content: center;
+    z-index: 2;
+}
+.cookie-popout{
+    position: absolute;
+    z-index: 2;
+    background-color: #0a0907;
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+    height: auto;
+    padding: 20px;
+    width: 50%;
+    opacity: 1;
+    color: #fff;
+}
+.cook_btn{
+    background-color: orange;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.cook_btn:hover{
+    scale: 1.05;
+    color: #fff;
+}
+
+
 li{
     list-style: none;
 }
@@ -82,6 +131,28 @@ header{
 .action_btn:active{
     scale: 0.95;
 }
+
+.action_btn2{
+    background-color: rgb(2, 101, 94);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.action_btn2:hover{
+    scale: 1.05;
+    color: #fff;
+}
+
+.action_btn2:active{
+    scale: 0.95;
+}
+
 
 .action_btn_open{
     border-radius: 20px;
@@ -177,6 +248,49 @@ header{
     justify-content: center;
 }
 .dropdown_menu li{
+    padding: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.dropdown_menu2{
+    position: absolute;
+    right: 2rem;
+    top: 60px;
+    height: 0px;
+    width: 300px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all .15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.dropdown_menu_open2{
+    height: 240px;
+    position: absolute;
+    right: 2rem;
+    top: 60px;
+    width: 300px;
+    height: auto;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all .15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 100;
+    /* transition: height .2s cubic-bezier(0.175, 0.885, 0.32, 1.275); */
+
+}
+.dropdown_menu_open2 li{
+    padding: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.dropdown_menu2 li{
     padding: 0.7rem;
     display: flex;
     align-items: center;
@@ -321,6 +435,11 @@ header{
 
 }
 
+.user_login{
+    color:#fff;
+    margin-right: 30px;
+}
+
 /* SQL SCRIPTS */
 
 .sqlscripts{
@@ -386,6 +505,41 @@ header{
     justify-content: center;
     margin: auto;
     padding: 30px;
+}
+.login_options{
+    display: flex;
+    justify-content: center;
+    
+    
+}
+.login_option1{
+    text-align: right;
+    margin-left:10px;
+    margin-right:10px;
+    padding-bottom: 20px;
+}
+.login_option2{
+    text-align: left;
+    margin-left:10px;
+    margin-right:10px;
+    padding-bottom: 20px;
+    
+}
+.login_res_hide{
+    display: none;
+}
+
+.login_res_show{
+    display: flex;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+.login_res_s{
+    color: rgb(50, 227, 50);
+}
+.login_res_f{
+    color: rgb(255, 0, 0);
 }
 
 /* BDD */

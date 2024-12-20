@@ -1,5 +1,6 @@
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React, { createContext, useEffect, useState } from "react";
+import Cookies from "js-cookie";
 import Layout from "./pages/Layout";
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
@@ -8,26 +9,85 @@ import Diagrams from "./pages/diagrams";
 import SqlScripts from "./pages/SqlScripts";
 import ThreeDeePrints from "./pages/3dprints";
 import Users from "./pages/Users";
-import './App.css';
+import Register from "./pages/user/register";
+import Reset from "./pages/user/reset";
+import Change from "./pages/user/change";
+import "./App.css";
 
+// Initialize user data in cookies
+if (!Cookies.get("user")) {
+  Cookies.set("user", JSON.stringify({ login: "none", logged: false }), { expires: 7 });
+}
 
-
+// Create a context for session data
+export const SessionContext = createContext();
 
 function App() {
+  const [sessionData, setSessionData] = useState(null);
+  const [showCookiePopout, setShowCookiePopout] = useState(false);
+
+  useEffect(() => {
+    // Load initial data from cookies
+    const user = Cookies.get("user");
+    if (user) setSessionData(JSON.parse(user));
+
+    // Check if the cookie consent has been acknowledged
+    if (!Cookies.get("cookieConsent")) {
+      setShowCookiePopout(true); // Show cookie popout if consent is not given
+    }
+  }, []);
+
+  useEffect(() => {
+    // Update cookies whenever `sessionData` changes
+    if (sessionData) {
+      Cookies.set("user", JSON.stringify(sessionData), { expires: 7 });
+    }
+  }, [sessionData]);
+
+  const handleCookieConsent = () => {
+    Cookies.set("cookieConsent", true, { expires: 2 }); // Set consent for 1 year
+    setShowCookiePopout(false);
+  };
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="diagrams" element={<Diagrams />} />
-          <Route path="contact" element={<Contact />} />
-          <Route path="sqlscripts" element={<SqlScripts />} />
-          <Route path="3dprints" element={<ThreeDeePrints />} />
-          <Route path="users" element={<Users />} />
-          <Route path="*" element={<NoPage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <SessionContext.Provider value={{ sessionData, setSessionData }}>
+      {showCookiePopout && (
+          <div className="cookie-popout-container">
+            <div className="cookie-popout">
+              
+              <p>
+                This website uses cookies to ensure you get<br></br> the best experience on our website.<br></br> By continuing
+                to use this site, you agree to the use of cookies.
+              </p>
+              <button className="cook_btn" onClick={handleCookieConsent}>
+                Accept
+              </button>
+            </div>
+          </div>
+        )}
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout sdata={sessionData} />}>
+            <Route index element={<Home />} />
+            <Route path="contact" element={<Contact />} />
+            {/* Conditionally render routes based on sessionData */}
+            {sessionData?.logged && (
+              <>
+                <Route path="sqlscripts" element={<SqlScripts />} />
+                <Route path="3dprints" element={<ThreeDeePrints />} />
+                <Route path="diagrams" element={<Diagrams />} />
+              </>
+            )}
+            <Route path="users" element={<Users />} />
+            <Route path="users/register" element={<Register />} />
+            <Route path="users/reset" element={<Reset />} />
+            <Route path="users/change" element={<Change />} />
+            <Route path="*" element={<NoPage />} />
+          </Route>
+        </Routes>
+        
+      </BrowserRouter>
+    </SessionContext.Provider>
   );
 }
 

@@ -11,8 +11,7 @@ const SqlScripts = () => {
   const formatSql = (event) => {
     event.preventDefault();
     const sqlValue = sqlForm.current.sql.value;
-    setFormated(format(sqlValue, { language: "mysql" }));
-    console.log(JSON.stringify(sqlValue));
+    setFormated(format(sqlValue, { language: "mysql" }));    
     setMode(true);
   };
 

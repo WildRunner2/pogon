@@ -312,8 +312,8 @@ header{
     text-align: left;
     background-color: #fff;
     color: #000;
-    min-width: 500px;
-    min-height: 10rem;
+    min-width: 100%;
+    height: calc( 80vh - 10rem);
 }
 
 .showPass{
@@ -496,7 +496,7 @@ header{
 /* SQL SCRIPTS */
 
 .sqlscripts{
-    max-width: 500px;
+    width:100%;
     justify-content: center;
     margin: auto;
     padding: 30px;

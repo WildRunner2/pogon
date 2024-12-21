@@ -55,6 +55,7 @@ const SqlScripts = () => {
   return (
     <div >
       <h1>SQL Scripts</h1>
+      <p>Content under development, for now only formatting of sql scripts is available</p>
       <form ref={sqlForm} className="ss">
         <textarea
           type="text"
@@ -71,7 +72,7 @@ const SqlScripts = () => {
         <button onClick={clearSql} className="button_script" type="button">
           Clear
         </button>
-        <button onClick={saveSql} className="button_script" type="submit">
+        <button onClick={saveSql} className="button_script" type="submit" disabled="true">
           Save
         </button>
       </form>

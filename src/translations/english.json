@@ -14,12 +14,20 @@
             "password":"Password",
             "confirmPassword":"Confirm Password",
             "logIn":"Login",
-            "register":"register",
-            "reset":"reset password",
+            "register":"Create account",             
+            "name":"Your Name",
+            "reset":"Reset",
+            "change":"Change",
+            "resetEmail":"Email Address - used for registration",
             "emailsent":", the email has been sent.",
             "thanks":"Thank you ",
             "emailsentF":"Message sending failed, please try again later.",
-            "regPageTitle":"Register"
+            "regPageTitle":"Register",
+            "resPageTitle":"Reset password",
+            "changePageTitle":"Change password",
+            "oldPassword":"Old password",
+            "newPassword":"New password",
+            "confNewPassword":"Confirm new password"
             
         },
         "contact":{

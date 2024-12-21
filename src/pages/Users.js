@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { SessionContext } from "../App";
+import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 
 
 
@@ -10,11 +11,14 @@ import { SessionContext } from "../App";
 import pl from "../translations/polski.json";
 import en from "../translations/english.json";
 import auth from "../env";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Users = (props) => {
   const { setSessionData } = useContext(SessionContext);
   const [responseMsg, setResponseMsg] = useState("");
   const [responseClass, setResponseClass] = useState("login_res_hide");
+  const [inputType, setInputype] = useState("password")
+  const [showPassIcon, setShowPassIcon] = useState(faEye)
   const loginForm = useRef();
 
   // Language handling
@@ -72,7 +76,14 @@ const Users = (props) => {
           loginForm.current.password.value = "";
         }
       });
+      
   };
+
+  const showPassword = (event) => {
+    event.preventDefault()
+    setInputype(inputType=="password"?"text":"password")
+    setShowPassIcon(inputType=="password"?faEyeSlash:faEye)
+  }
 
   return (
     <div className="users">
@@ -96,13 +107,14 @@ const Users = (props) => {
             {lang.translation.login.password || "Password"}
           </label>
           <input
-            type="password"
+            type={inputType}
             className="form-control"
             id="password"
             name="password"
             placeholder="*********"
             required
-          />
+          /><button className="showPass" onClick={showPassword}
+          ><FontAwesomeIcon icon={showPassIcon} /></button>
         </div>
         <div className="mb-3">
           <button

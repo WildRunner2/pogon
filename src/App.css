@@ -84,8 +84,10 @@ a:hover{
 }
 /* HEADER */
 header{
-    position: relative;
+    position: sticky;
     padding: 0 2rem;
+    top: 0;
+    background-color: #000;
 }
 
 .navbar{
@@ -95,7 +97,7 @@ header{
     /* display: flex; */
     align-items: center;
     justify-content: space-between;
-    position: sticky;
+    /* position: absolute; */
     top: 0;
     overflow: hidden;
     padding-left: 20px;
@@ -306,15 +308,58 @@ header{
 }
 
 /* MAIN CONTENT */
+.formated{
+    text-align: left;
+    background-color: #fff;
+    color: #000;
+    min-width: 500px;
+    min-height: 10rem;
+}
+
+.showPass{
+    position: relative;
+    left: 45%;
+    top: 50%;
+    transform: translateY(-120%);
+    border: none;
+    background: none;
+            cursor: pointer;
+            color: rgb(121, 121, 121);
+            z-index: 3;
+}
+
+.form-control1{
+    padding-right: 40px;
+}
 
 
 .main_content{
     margin-top: 60px;
+    /* min-height:calc(100vh + 60px); */
     color: #fff;
     background-color: rgba(148, 148, 147, 0.671);
     text-align: center;
    
 }
+
+
+/* FOOTER */
+.footer{
+   
+    margin-top: calc (100% - 60px);
+    color: #fff;
+    min-height: 60px;
+    text-align: center;
+    margin: auto;
+    padding: 10px;
+    position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+    background-color: #000;
+    opacity: 0.8;
+}
+
 /* DIAGRAMS */
 #diagrams_container{
     text-align: center;
@@ -455,6 +500,20 @@ header{
     justify-content: center;
     margin: auto;
     padding: 30px;
+}
+
+.button_script{
+    background-color:#ffa500;
+    border: none;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 3px;
+    transition: all .2s;
+
+}
+
+.button_script:hover{
+    background-color:#d68d06;
 }
 
 /* 3D PRINTS */

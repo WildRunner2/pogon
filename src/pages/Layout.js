@@ -170,6 +170,8 @@ const Layout = (props) => {
       <div className="container-md main_content">
         <Outlet />
       </div>
+
+      {/* <div className="footer">footer</div> */}
     </>
   );
 };

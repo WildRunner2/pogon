@@ -704,6 +704,7 @@ function Diagrams(props) {
      {/* <div className={loading===1 ? "hide" : "visiable"}> */}
      <div id="pageDisplay" className="container">
       {page}
+      
       {/* </div>  */}
       </div>          
       <Modal show={show} onHide={handleClose}>

@@ -24,6 +24,7 @@
     "react-dom": "^19.0.0",
     "react-graph-vis": "^1.0.7",
     "react-scripts": "^5.0.1",
+    "sql-formatter": "^15.4.8",
     "web-vitals": "^4.2.4",
     "webpack": "^5.97.1"
   },

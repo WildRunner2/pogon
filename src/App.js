@@ -85,10 +85,11 @@ function App() {
                 <Route path="sqlscripts" element={<SqlScripts />} />
                 <Route path="3dprints" element={<ThreeDeePrints />} />
                 <Route path="diagrams" element={<Diagrams />} />
-                <Route path="users/reset" element={<Reset />} />
+                
                 <Route path="users/change" element={<Change />} />
               </>
             )}
+            <Route path="users/reset" element={<Reset />} />
             <Route path="users" element={<Users />} />
             <Route path="users/register" element={<Register />} />
             

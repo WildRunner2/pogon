@@ -1,11 +1,15 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useRef, useContext } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { SessionContext } from "../App";
 
+
+
+
 import pl from "../translations/polski.json";
 import en from "../translations/english.json";
+import auth from "../env";
 
 const Users = (props) => {
   const { setSessionData } = useContext(SessionContext);
@@ -20,12 +24,19 @@ const Users = (props) => {
   // Login function
   const Login = (event) => {
     event.preventDefault();
-
     const email = loginForm.current.email.value;
     const password = loginForm.current.password.value;
-
+    const Busername = auth.BASIC_AUTH_USERNAME
+    const Bpassword = auth.BASIC_AUTH_PASSWORD
+    const token = btoa(`${Busername}:${Bpassword}`); // Encode credentials
     axios
-      .post("http://localhost:3010/api/users/login", { email, password })
+      .post("http://localhost:3010/api/users/login", { email, password },
+        {
+          headers: {
+            Authorization: `Basic ${token}`,
+          },
+        }
+      )
       .then((response) => {
         const status = response?.data?.data?.status;
 

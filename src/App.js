@@ -41,11 +41,17 @@ function App() {
     // Update cookies whenever `sessionData` changes
     if (sessionData) {
       Cookies.set("user", JSON.stringify(sessionData), { expires: 7 });
-    }
+    }    
+
   }, [sessionData]);
 
   const handleCookieConsent = () => {
     Cookies.set("cookieConsent", true, { expires: 2 }); // Set consent for 1 year
+    setShowCookiePopout(false);
+  };
+
+  const handleCookieDecline = () => {
+    Cookies.set("cookieConsent", false, { expires: 1 }); // Set consent for 1 year
     setShowCookiePopout(false);
   };
 
@@ -54,7 +60,7 @@ function App() {
       {showCookiePopout && (
           <div className="cookie-popout-container">
             <div className="cookie-popout">
-              
+              <h3>JB Site</h3>
               <p>
                 This website uses cookies to ensure you get<br></br> the best experience on our website.<br></br> By continuing
                 to use this site, you agree to the use of cookies.
@@ -62,12 +68,15 @@ function App() {
               <button className="cook_btn" onClick={handleCookieConsent}>
                 Accept
               </button>
+              <button className="cook_btn" onClick={handleCookieDecline}>
+                Decline
+              </button>
             </div>
           </div>
         )}
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout sdata={sessionData} />}>
+          <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="contact" element={<Contact />} />
             {/* Conditionally render routes based on sessionData */}
@@ -76,12 +85,13 @@ function App() {
                 <Route path="sqlscripts" element={<SqlScripts />} />
                 <Route path="3dprints" element={<ThreeDeePrints />} />
                 <Route path="diagrams" element={<Diagrams />} />
+                <Route path="users/reset" element={<Reset />} />
+                <Route path="users/change" element={<Change />} />
               </>
             )}
             <Route path="users" element={<Users />} />
             <Route path="users/register" element={<Register />} />
-            <Route path="users/reset" element={<Reset />} />
-            <Route path="users/change" element={<Change />} />
+            
             <Route path="*" element={<NoPage />} />
           </Route>
         </Routes>

@@ -1,13 +1,13 @@
 import { Outlet, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect, useContext } from "react";
-import { faBars, faClose } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faClose, faUser } from "@fortawesome/free-solid-svg-icons";
 import useWindowDimensions from "../hooks/windowDimension";
 import Cookies from "js-cookie"; // Import js-cookie
 import { SessionContext } from "../App";
 
 const Layout = (props) => {
-  const { setSessionData } = useContext(SessionContext);
+  const { sessionData, setSessionData } = useContext(SessionContext);
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [toggleIcon, setToggleIcon] = useState(<FontAwesomeIcon icon={faBars} />);
@@ -17,23 +17,26 @@ const Layout = (props) => {
   const [loginName, setLoginName] = useState("Login");
   const [logged, setLogged] = useState(false);
   const [dropLogClass, setDropLogClass] = useState("action_btn");
-
+ 
+  
   useEffect(() => {
     // Check user cookie to maintain login state across refreshes
     const userCookie = Cookies.get("user");
     if (userCookie) {
       const user = JSON.parse(userCookie);
       if (user.logged) {        
-        setLoginName(user.login);
+        setLoginName(<FontAwesomeIcon icon={faUser} />);
         setDropLogClass("action_btn2");
         setLogged(true);
-      } else {
+      } 
+      else {
         setLoginName("Login");
         setLogged(false);
       }
     }
-  }, []);
 
+  }, [sessionData]);
+  
   const handleToggleMenu = () => {
     setOpen((prevOpen) => !prevOpen);
   };
@@ -82,7 +85,7 @@ const Layout = (props) => {
     }
   }, [width, open]);
 
-  console.log(Cookies.get("user")); // Debug: log user cookie
+ // console.log(Cookies.get("user")); // Debug: log user cookie
 
   return (
     <>
@@ -92,57 +95,31 @@ const Layout = (props) => {
             <Link to="/">JB</Link>
           </div>
           <ul className="links">
-            <li>
-              <Link onClick={handleToggleMenu3} to="/">
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link onClick={handleToggleMenu3} to="/diagrams">
-                BDD
-              </Link>
-            </li>
-            <li>
-              <Link onClick={handleToggleMenu3} to="/sqlscripts">
-                SqlScripts
-              </Link>
-            </li>
-            <li>
-              <Link onClick={handleToggleMenu3} to="/3dprints">
-                3d
-              </Link>
-            </li>
-            <li>
-              <Link onClick={handleToggleMenu3} to="/contact">
-                Contact
-              </Link>
-            </li>
+            <li><Link onClick={handleToggleMenu3} to="/">Home</Link></li>
+            <li><Link onClick={handleToggleMenu3} to="/diagrams">BDD</Link></li>
+            <li><Link onClick={handleToggleMenu3} to="/sqlscripts">SqlScripts</Link></li>
+            <li><Link onClick={handleToggleMenu3} to="/3dprints">3d</Link></li>
+            <li><Link onClick={handleToggleMenu3} to="/contact">Contact</Link></li>
           </ul>
-          <Link className={dropLogClass} onClick={logged ? handleToggleMenu2 : ""} to="/users">
-            {loginName}
-          </Link>
-          <div className="toggle_btn" onClick={handleToggleMenu}>
-            <i>{toggleIcon}</i>
-          </div>
+          {logged && (
+            <>
+              <button className={dropLogClass} onClick={handleToggleMenu2} >{loginName}</button>              
+            </>
+          )}
+          {!logged && (
+            <>
+              <Link className={dropLogClass} to="/users">{loginName}</Link>              
+            </>
+          )}
+          
+          <div className="toggle_btn" onClick={handleToggleMenu}><i>{toggleIcon}</i></div>
         </div>
         <div className={dropClass2}>
           {logged && (
             <>
-              <li>
-                <Link onClick={handleToggleMenu2} to="/user/profile">
-                  User profile
-                </Link>
-              </li>
-              <li>
-                <Link onClick={handleToggleMenu2} to="/users/change">
-                  Change password
-                </Link>
-              </li>
-              <li>
-                <Link onClick={logout} className="action_btn_open">
-                  Logout
-                </Link>
-              </li>
+              {/* <li><Link onClick={handleToggleMenu2} to="/user/profile">User profile</Link></li> */}
+              <li><Link onClick={handleToggleMenu2} to="/users/change">Change password</Link></li>
+              <li><Link onClick={logout} className="action_btn_open">Logout</Link></li>
             </>
           )}
         </div>
@@ -179,6 +156,14 @@ const Layout = (props) => {
               </Link>
             </li>
           )}
+          {logged && (
+            <>
+              {/* <li><Link onClick={handleToggleMenu2} to="/user/profile">User profile</Link></li> */}
+              <li><Link onClick={handleToggleMenu2} to="/users/change">Change password</Link></li>
+              <li><Link onClick={logout} className="action_btn_open">Logout</Link></li>
+            </>
+          )}
+          
         </div>
       </header>
 

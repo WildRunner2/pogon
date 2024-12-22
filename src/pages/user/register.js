@@ -31,7 +31,7 @@ const Register = (props) => {
     const Bpassword = auth.BASIC_AUTH_PASSWORD
     const token = btoa(`${Busername}:${Bpassword}`); // Encode credentials
     axios
-      .post("http://localhost:3010/api/users/", { email,login, password, conf_password},
+      .post("https://jbsite-api.onrender.com/api/users/", { email,login, password, conf_password},
         {
           headers: {
             Authorization: `Basic ${token}`,

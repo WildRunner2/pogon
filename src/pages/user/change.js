@@ -31,7 +31,7 @@ const Change = (props) => {
     const Bpassword = auth.BASIC_AUTH_PASSWORD
     const token = btoa(`${Busername}:${Bpassword}`); // Encode credentials
     axios
-      .post("http://localhost:3010/api/users/password", { email, cur_password, new_password, new_conf_password},
+      .post("https://jbsite-api.onrender.com/api/users/password", { email, cur_password, new_password, new_conf_password},
         {
           headers: {
             Authorization: `Basic ${token}`,

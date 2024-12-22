@@ -37,7 +37,7 @@ const SqlScripts = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3010/api/scripts/",
+        "https://jbsite-api.onrender.com/api/scripts/",
         { sql, userId },
         {
           headers: {

@@ -6,13 +6,30 @@ import auth from "../env";
 const SqlScripts = () => {
   const [formated, setFormated] = useState("");
   const [mode, setMode] = useState(false);
+  const [formatLang, setFormatLang] = useState("transactsql")
   const sqlForm = useRef(null);
+
+
+
+  const setlang = (event) => {
+    event.preventDefault()
+    setFormatLang(event.target.value)
+    console.log(formatLang)
+
+  }
+
 
   const formatSql = (event) => {
     event.preventDefault();
     const sqlValue = sqlForm.current.sql.value;
-    setFormated(format(sqlValue, { language: "mysql" }));    
-    setMode(true);
+    console.log(formatLang)
+    try {
+      setFormated(format(sqlValue, { language: formatLang }));    
+      setMode(true);
+    } catch (error) {
+      console.error(error)
+    }
+    
   };
 
   const handleChange = (event) => {
@@ -57,6 +74,7 @@ const SqlScripts = () => {
       <h1>SQL Scripts</h1>
       <p>Content under development, for now only formatting of sql scripts is available</p>
       <form ref={sqlForm} className="ss">
+
         <textarea
           type="text"
           spellCheck="false"
@@ -66,15 +84,35 @@ const SqlScripts = () => {
           value={formated}
           onChange={handleChange}
         ></textarea>
-        <button onClick={formatSql} className="button_script" type="button">
-          Format
-        </button>
-        <button onClick={clearSql} className="button_script" type="button">
-          Clear
-        </button>
-        <button onClick={saveSql} className="button_script" type="submit" disabled="true">
-          Save
-        </button>
+        
+        <div className="sqlFormBar2">
+          <button onClick={formatSql} className="button_script" type="button">Format</button>
+          <button onClick={clearSql} className="button_script" type="button">Clear</button>
+          <button onClick={saveSql} className="button_script" type="submit" disabled="true">Save</button>
+        </div>
+        <div className="sqlFormBar1">
+          <select name="sqlFormat" id="sqlFormat" className="sqlLangChoose" onChange={setlang} defaultValue="transactsql">
+            <option value="sql">sql</option>
+            <option value="bigquery">bigquery</option>
+            <option value="db2">db2</option>
+            <option value="db2i">db2i</option>
+            <option value="hive">hive</option>
+            <option value="mariadb">mariadb</option>
+            <option value="mysql">mysql</option>
+            <option value="tidb">tidb</option>
+            <option value="n1ql">n1ql</option>
+            <option value="plsql">plsql</option>
+            <option value="postgresql">postgresql</option>
+            <option value="redshift">redshift</option>
+            <option value="singlestoredb">singlestoredb</option>
+            <option value="snowflake">snowflake</option>
+            <option value="spark">spark</option>
+            <option value="sqlite">sqlite</option>
+            <option value="transactsql">transactsql</option>
+            <option value="trino">trino</option>
+          </select>
+        </div>
+        
       </form>
     </div>
   );

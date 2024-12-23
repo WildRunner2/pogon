@@ -12,7 +12,10 @@ body{
     background-size: cover;
     background-position: cover;
 }
-
+::selection{
+    background: #000;
+    color: #fff
+}
 
 /* COOKIES */
 .cookie-popout-container{
@@ -515,6 +518,29 @@ header{
 .button_script:hover{
     background-color:#d68d06;
 }
+
+.sqlLangChoose{
+    left: 0;
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+    background-color: #cacaca;
+    outline: none;
+    
+}
+
+
+
+.sqlFormBar1{
+    display: inline;
+    margin:auto;
+    min-inline-size: 400px;
+}
+.sqlFormBar2{
+    display: inline;
+}
+
+
 
 /* 3D PRINTS */
 

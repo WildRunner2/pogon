@@ -43,10 +43,11 @@ const Layout = (props) => {
 
   const handleToggleMenu2 = () => {
     setOpen2((prevOpen) => !prevOpen);
+    setOpen((prevOpen) => !prevOpen);
   };
 
   const handleToggleMenu3 = () => {
-    if (open2) setOpen2((prevOpen) => !prevOpen);
+    if (open2) setOpen2((prevOpen2) => !prevOpen2);
   };
 
   const logout = () => {
@@ -84,6 +85,8 @@ const Layout = (props) => {
       setOpen(false);
     }
   }, [width, open]);
+
+ 
 
  // console.log(Cookies.get("user")); // Debug: log user cookie
 

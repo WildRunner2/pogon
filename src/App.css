@@ -316,13 +316,7 @@ header{
 }
 
 /* MAIN CONTENT */
-.formated{
-    text-align: left;
-    background-color: #fff;
-    color: #000;
-    min-width: 100%;
-    height: calc( 80vh - 10rem);
-}
+
 
 .showPass{
     position: relative;
@@ -502,9 +496,33 @@ header{
 }
 
 /* SQL SCRIPTS */
+.sqlContainer{
+    display: grid;
+    grid-template-areas:
+    "menu content";
+  grid-template-columns: 1fr 6fr;
+  gap: 5px;
+  padding: 5px;
+}
+
+.sqlContainer > div.scriptSideNavBar{
+    grid-area: menu;
+}
+
+.sqlContainer > div.sqlForm{
+    grid-area: content;
+}
+
+.formated{
+    text-align: left;
+    background-color: #fff;
+    color: #000;
+   min-width: 100%;
+    height: calc( 80vh - 10rem);
+}
 
 .sqlscripts{
-    width:100%;
+   
     justify-content: center;
     margin: auto;
     padding: 30px;
@@ -533,7 +551,16 @@ header{
     outline: none;
     
 }
-
+.scriptSideNavBar{
+    text-align: left;;
+   justify-content: left;
+   background-color: rgba(255, 255, 255, 0.2);
+   max-height: calc(100% - 53px);
+   
+}
+.sqlForm{
+   /* background-color: #000; */
+}
 
 
 .sqlFormBar1{

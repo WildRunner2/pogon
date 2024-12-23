@@ -73,14 +73,31 @@ const SqlScripts = () => {
     <div >
       <h1>SQL Scripts</h1>
       <p>Content under development, for now only formatting of sql scripts is available</p>
-      <form ref={sqlForm} className="ss">
+      
+      <div className="sqlContainer">
+      <div className="scriptSideNavBar">
+        <nav>
+          <ul>
+            <li>Add / Format</li>
+            <li>Store</li>
+              <ul>
+                <li>Categories</li>
+                <ul>
+                  <li>Hana</li>
+                  <li>SQL</li>
+                </ul>
+              </ul>
+          </ul>
+        </nav>
+      </div>
+      <form ref={sqlForm} className="sqlForm">
 
         <textarea
           type="text"
           spellCheck="false"
           name="sql"
           id="sql"
-          className="formated form-control"
+          className="formated"
           value={formated}
           onChange={handleChange}
         ></textarea>
@@ -114,6 +131,7 @@ const SqlScripts = () => {
         </div>
         
       </form>
+      </div>
     </div>
   );
 };

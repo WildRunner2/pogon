@@ -147,11 +147,11 @@ header{
 
 .action_btn2{
     background-color: orange; 
-    color: #fff;
-    padding: 0.5rem 1rem;
+    color: #000000;
+    padding: 0.7rem 1rem;
     border: none;
     outline: none;
-    border-radius: 20px;
+    border-radius: 100%;
     font-size: 0.8rem;
     font-weight: bold;
     cursor: pointer;
@@ -239,14 +239,14 @@ header{
 }
 
 .dropdown_menu_open{
-    height: 240px;
     position: absolute;
+    font-weight: 600;
     right: 2rem;
     top: 60px;
     width: 300px;
     height: auto;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(15px);
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(20px);
     border-radius: 10px;
     overflow: hidden;
     transition: all .15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -260,6 +260,11 @@ header{
     align-items: center;
     justify-content: center;
 }
+.dropdown_menu_open li a{
+    color: #000
+}
+
+
 .dropdown_menu li{
     padding: 0.7rem;
     display: flex;
@@ -672,7 +677,9 @@ header{
 @media (max-width: 992px) {
     .navbar .links,
     .navbar .action_btn,
-    .action_btn2{
+    .action_btn2 ,
+    .dropdown_menu2,
+    .dropdown_menu_open2{
         display: none;
     }
 

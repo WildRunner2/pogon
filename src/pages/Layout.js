@@ -39,6 +39,11 @@ const Layout = (props) => {
   
   const handleToggleMenu = () => {
     setOpen((prevOpen) => !prevOpen);
+    if(open){
+      if($("#sql").hasClass('formated')){
+        $("#sql").removeClass("formated").addClass("formated2");
+      }
+    }
   };
 
   const handleToggleMenu2 = () => {
@@ -86,7 +91,7 @@ const Layout = (props) => {
     }
   }, [width, open]);
 
- 
+  
 
  // console.log(Cookies.get("user")); // Debug: log user cookie
 

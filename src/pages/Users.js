@@ -81,8 +81,8 @@ const Users = (props) => {
 
   const showPassword = (event) => {
     event.preventDefault()
-    setInputype(inputType=="password"?"text":"password")
-    setShowPassIcon(inputType=="password"?faEyeSlash:faEye)
+    setInputype(inputType==="password"?"text":"password")
+    setShowPassIcon(inputType==="password"?faEyeSlash:faEye)
   }
 
   return (

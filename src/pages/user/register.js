@@ -1,5 +1,4 @@
-import React, {useState, useEffect, useRef} from "react";
-import { Outlet, Link } from "react-router-dom";
+import React, {useState, useRef} from "react";
 import axios from "axios";
 
 import pl from '../../translations/polski.json'

@@ -319,6 +319,9 @@ header{
 
 /* MAIN CONTENT */
 
+.pass{
+    margin: 0px !important;
+}
 
 .showPass{
     position: relative;
@@ -327,9 +330,10 @@ header{
     transform: translateY(-120%);
     border: none;
     background: none;
-            cursor: pointer;
-            color: rgb(121, 121, 121);
-            z-index: 3;
+    cursor: pointer;
+    color: rgb(121, 121, 121);
+    z-index: 3;
+    max-width: 10px;
 }
 
 .form-control1{

@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import axios from "axios";
 import emailjs from '@emailjs/browser';
 
@@ -18,6 +20,12 @@ const Register = (props) => {
   const [isTokenSent, setIsTokenSent] = useState(false); // To control token state
   const timerRef = useRef(null);
 
+  const [inputType, setInputype] = useState("password")
+  const [showPassIcon, setShowPassIcon] = useState(faEye)
+  const [inputTypeConf, setInputypeConf] = useState("password")
+  const [showPassIconConf, setShowPassIconConf] = useState(faEye)
+
+
   let lang;
   if (language === 'pl') {
     lang = pl;
@@ -32,7 +40,7 @@ const Register = (props) => {
 
   // Start countdown timer
   const startCountdown = () => {
-    setRemainingTime(60); // 1 minute
+    setRemainingTime(120); // 1 minute
     timerRef.current = setInterval(() => {
       setRemainingTime((prev) => {
         if (prev <= 1) {
@@ -57,7 +65,19 @@ const Register = (props) => {
   const sendTokenEmail = () => {
     const email = loginForm.current.email.value;
     const name = loginForm.current.name.value;
-    
+    const password = loginForm.current.password.value;
+    const conf_password = loginForm.current.conf_password.value;
+
+    if(password!=conf_password){
+      setResponseClass("login_res_show login_res_f");
+      setResponseMsg(lang.translation.login.missingFields || "Passwords are not the same.");
+      return;
+    } else if (password.length<6){
+      setResponseClass("login_res_show login_res_f");
+      setResponseMsg(lang.translation.login.missingFields || "Password need to contain at least 6 characters.");
+      return;
+    }
+
     if (!email || !name) {
       setResponseClass("login_res_show login_res_f");
       setResponseMsg(lang.translation.login.missingFields || "Please fill out all fields before generating the token.");
@@ -132,7 +152,7 @@ const Register = (props) => {
         const status = response?.data?.data?.status;
         if (status === "OK") {
           setResponseClass("login_res_show login_res_s");
-          setResponseMsg(lang.translation.login.success || "Registration successful!");
+          setResponseMsg(lang.translation.login.success || "Registration successful! Go to the login page to proceed.");
         } else {
           setResponseClass("login_res_show login_res_f");
           setResponseMsg(response.data.data || "Registration failed.");
@@ -158,6 +178,16 @@ const Register = (props) => {
       });
   };
 
+  const showPassword = (event) => {
+    event.preventDefault()   
+    setInputype(inputType==="password"?"text":"password")
+    setShowPassIcon(inputType==="password"?faEyeSlash:faEye)
+  }
+  const showPasswordConf = (event) => {
+    event.preventDefault()        
+    setInputypeConf(inputTypeConf==="password"?"text":"password")
+    setShowPassIconConf(inputTypeConf==="password"?faEyeSlash:faEye)
+  }
   // Cleanup timer on component unmount
   useEffect(() => {
     return () => stopCountdown();
@@ -174,14 +204,17 @@ const Register = (props) => {
         <div className="mb-3">
           <label htmlFor="name" className="form-label">{lang.translation.login.name}</label>
           <input type="text" className="form-control" id="name" name="name" placeholder="John" required></input>
+          
         </div>
-        <div className="mb-3">
+        <div className="mb-3 pass">
           <label htmlFor="password" className="form-label">{lang.translation.login.password}</label>
-          <input type="password" className="form-control" id="password" name="password" placeholder="*********" required></input>
+          <input type={inputType} className="form-control" id="password" name="password" placeholder="*********" required></input>
+          <button className="showPass" type="button" onClick={showPassword}><FontAwesomeIcon icon={showPassIcon} /></button>
         </div>
-        <div className="mb-3">
+        <div className="mb-3 pass">
           <label htmlFor="conf_password" className="form-label">{lang.translation.login.confirmPassword}</label>
-          <input type="password" className="form-control" id="conf_password" name="conf_password" placeholder="*********" required></input>
+          <input type={inputTypeConf} className="form-control" id="conf_password" name="conf_password" placeholder="*********" required></input>
+          <button className="showPass" type="button" onClick={showPasswordConf}><FontAwesomeIcon icon={showPassIconConf} /></button>
         </div>
 
         {!isTokenSent && (

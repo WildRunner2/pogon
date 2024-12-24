@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState, useContext} from "react";
 import { format } from "sql-formatter";
 import axios from "axios";
 import auth from "../env";
@@ -6,12 +6,15 @@ import CodeMirror from '@uiw/react-codemirror';
 import { basicDark } from '@uiw/codemirror-theme-basic';
 // import { gruvboxDark } from '@uiw/codemirror-theme-gruvbox-dark';
 import { sql } from "@codemirror/lang-sql";
+import { OpenContext } from "../pages/Layout";
 
 
 const SqlAddFormat = (props) => {
+  const openfromContext = useContext(OpenContext);
   const [formatLang, setFormatLang] = useState("transactsql")
   const [value, setValue] = React.useState(props?.data?.sql);
   const sqlForm = useRef(null);
+  
   
   const onChange = React.useCallback((val, viewUpdate) => {
    
@@ -75,7 +78,7 @@ const SqlAddFormat = (props) => {
     
         
         <form ref={sqlForm} className="sqlForm">
-            <CodeMirror className="formated" value={value}  name="sql"
+            <CodeMirror className={openfromContext ? "formated2":"formated"} value={value}  name="sql"
             id="sql" spellCheck="false" height="100%" theme={basicDark} onChange={onChange} 
             extensions={[sql()]} />
         {/* <textarea

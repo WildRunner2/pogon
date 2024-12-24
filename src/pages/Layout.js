@@ -1,10 +1,13 @@
 import { Outlet, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, createContext } from "react";
 import { faBars, faClose, faUser } from "@fortawesome/free-solid-svg-icons";
 import useWindowDimensions from "../hooks/windowDimension";
 import Cookies from "js-cookie"; // Import js-cookie
 import { SessionContext } from "../App";
+
+
+export const OpenContext = createContext();
 
 const Layout = (props) => {
   const { sessionData, setSessionData } = useContext(SessionContext);
@@ -93,89 +96,91 @@ const Layout = (props) => {
 
   return (
     <>
-      <header>
-        <div className="navbar">
-          <div className="logo">
-            <Link to="/">JB</Link>
+      <OpenContext.Provider value={open}>
+        <header>
+          <div className="navbar">
+            <div className="logo">
+              <Link to="/">JB</Link>
+            </div>
+            <ul className="links">
+              <li><Link onClick={handleToggleMenu3} to="/">Home</Link></li>
+              <li><Link onClick={handleToggleMenu3} to="/diagrams">BDD</Link></li>
+              <li><Link onClick={handleToggleMenu3} to="/sqlscripts">SqlScripts</Link></li>
+              <li><Link onClick={handleToggleMenu3} to="/3dprints">3d</Link></li>
+              <li><Link onClick={handleToggleMenu3} to="/contact">Contact</Link></li>
+            </ul>
+            {logged && (
+              <>
+                <button className={dropLogClass} onClick={handleToggleMenu2} >{loginName}</button>              
+              </>
+            )}
+            {!logged && (
+              <>
+                <Link className={dropLogClass} to="/users">{loginName}</Link>              
+              </>
+            )}
+            
+            <div className="toggle_btn" onClick={handleToggleMenu}><i>{toggleIcon}</i></div>
           </div>
-          <ul className="links">
-            <li><Link onClick={handleToggleMenu3} to="/">Home</Link></li>
-            <li><Link onClick={handleToggleMenu3} to="/diagrams">BDD</Link></li>
-            <li><Link onClick={handleToggleMenu3} to="/sqlscripts">SqlScripts</Link></li>
-            <li><Link onClick={handleToggleMenu3} to="/3dprints">3d</Link></li>
-            <li><Link onClick={handleToggleMenu3} to="/contact">Contact</Link></li>
-          </ul>
-          {logged && (
-            <>
-              <button className={dropLogClass} onClick={handleToggleMenu2} >{loginName}</button>              
-            </>
-          )}
-          {!logged && (
-            <>
-              <Link className={dropLogClass} to="/users">{loginName}</Link>              
-            </>
-          )}
-          
-          <div className="toggle_btn" onClick={handleToggleMenu}><i>{toggleIcon}</i></div>
-        </div>
-        <div className={dropClass2}>
-          {logged && (
-            <>
-              {/* <li><Link onClick={handleToggleMenu2} to="/user/profile">User profile</Link></li> */}
-              <li><Link onClick={handleToggleMenu2} to="/users/change">Change password</Link></li>
-              <li><Link onClick={logout} className="action_btn_open">Logout</Link></li>
-            </>
-          )}
-        </div>
-        <div className={dropClass}>
-          <li>
-            <Link onClick={handleToggleMenu} to="/">
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link onClick={handleToggleMenu} to="/diagrams">
-              BDD
-            </Link>
-          </li>
-          <li>
-            <Link onClick={handleToggleMenu} to="/sqlscripts">
-              SqlScripts
-            </Link>
-          </li>
-          <li>
-            <Link onClick={handleToggleMenu} to="/3dprints">
-              3d
-            </Link>
-          </li>
-          <li>
-            <Link onClick={handleToggleMenu} to="/contact">
-              Contact
-            </Link>
-          </li>
-          {!logged && (
+          <div className={dropClass2}>
+            {logged && (
+              <>
+                {/* <li><Link onClick={handleToggleMenu2} to="/user/profile">User profile</Link></li> */}
+                <li><Link onClick={handleToggleMenu2} to="/users/change">Change password</Link></li>
+                <li><Link onClick={logout} className="action_btn_open">Logout</Link></li>
+              </>
+            )}
+          </div>
+          <div className={dropClass}>
             <li>
-              <Link onClick={handleToggleMenu} className="action_btn_open" to="/users">
-                Login
+              <Link onClick={handleToggleMenu} to="/">
+                Home
               </Link>
             </li>
-          )}
-          {logged && (
-            <>
-              {/* <li><Link onClick={handleToggleMenu2} to="/user/profile">User profile</Link></li> */}
-              <li><Link onClick={handleToggleMenu2} to="/users/change">Change password</Link></li>
-              <li><Link onClick={logout} className="action_btn_open">Logout</Link></li>
-            </>
-          )}
-          
+            <li>
+              <Link onClick={handleToggleMenu} to="/diagrams">
+                BDD
+              </Link>
+            </li>
+            <li>
+              <Link onClick={handleToggleMenu} to="/sqlscripts">
+                SqlScripts
+              </Link>
+            </li>
+            <li>
+              <Link onClick={handleToggleMenu} to="/3dprints">
+                3d
+              </Link>
+            </li>
+            <li>
+              <Link onClick={handleToggleMenu} to="/contact">
+                Contact
+              </Link>
+            </li>
+            {!logged && (
+              <li>
+                <Link onClick={handleToggleMenu} className="action_btn_open" to="/users">
+                  Login
+                </Link>
+              </li>
+            )}
+            {logged && (
+              <>
+                {/* <li><Link onClick={handleToggleMenu2} to="/user/profile">User profile</Link></li> */}
+                <li><Link onClick={handleToggleMenu2} to="/users/change">Change password</Link></li>
+                <li><Link onClick={logout} className="action_btn_open">Logout</Link></li>
+              </>
+            )}
+            
+          </div>
+        </header>
+
+        <div className="container-md main_content">
+          <Outlet />
         </div>
-      </header>
 
-      <div className="container-md main_content">
-        <Outlet />
-      </div>
-
-      {/* <div className="footer">footer</div> */}
+        {/* <div className="footer">footer</div> */}
+      </OpenContext.Provider>
     </>
   );
 };

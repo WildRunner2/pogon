@@ -239,7 +239,7 @@ header{
 }
 
 .dropdown_menu_open{
-    position: absolute;
+    position: absolute !important;
     font-weight: 600;
     right: 2rem;
     top: 60px;
@@ -250,7 +250,8 @@ header{
     border-radius: 10px;
     overflow: hidden;
     transition: all .15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    z-index: 1;
+    z-index: 200 !important;
+    transform: translateZ(0);
     /* transition: height .2s cubic-bezier(0.175, 0.885, 0.32, 1.275); */
 
 }
@@ -289,6 +290,7 @@ header{
 .dropdown_menu_open2{
     height: 240px;
     position: absolute;
+    transform: translateZ(0);
     right: 2rem;
     top: 60px;
     width: 300px;
@@ -316,13 +318,7 @@ header{
 }
 
 /* MAIN CONTENT */
-.formated{
-    text-align: left;
-    background-color: #fff;
-    color: #000;
-    min-width: 100%;
-    height: calc( 80vh - 10rem);
-}
+
 
 .showPass{
     position: relative;
@@ -342,7 +338,7 @@ header{
 
 
 .main_content{
-    margin-top: 60px;
+    margin-top: 40px;
     /* min-height:calc(100vh + 60px); */
     color: #fff;
     background-color: rgba(148, 148, 147, 0.671);
@@ -502,9 +498,37 @@ header{
 }
 
 /* SQL SCRIPTS */
+.sqlContainer{
+   
+  gap: 5px;
+  padding: 5px;
+  min-height: 400px;
+}
+
+
+.formated{
+    text-align: left;
+    min-width: 100%;
+    height: calc( 80vh - 10rem);
+    z-index: -10 !important;
+}
+
+.formated2 {
+    height: calc( 80vh - 10rem - 150px);
+    margin-top: calc(150px)
+}
+
+.cm-layer .cm-layer-above .cm-cursorLayer{
+   
+    z-index: -10 !important;
+}
+.formated::selection{
+    background-color: #000;
+    color: #fff;
+}
 
 .sqlscripts{
-    width:100%;
+   
     justify-content: center;
     margin: auto;
     padding: 30px;
@@ -533,7 +557,17 @@ header{
     outline: none;
     
 }
-
+.scriptSideNavBar{
+    text-align: left;;
+   justify-content: left;
+   background-color: rgba(255, 255, 255, 0.2);
+   max-height: calc(100% - 53px);
+   
+}
+.sqlForm{
+   /* background-color: #000; */
+   z-index: -1 !important;
+}
 
 
 .sqlFormBar1{
@@ -682,6 +716,7 @@ header{
     .dropdown_menu_open2{
         display: none;
     }
+    
 
     .navbar .toggle_btn{
         display: block;

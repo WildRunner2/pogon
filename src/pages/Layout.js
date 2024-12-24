@@ -39,11 +39,7 @@ const Layout = (props) => {
   
   const handleToggleMenu = () => {
     setOpen((prevOpen) => !prevOpen);
-    if(open){
-      if($("#sql").hasClass('formated')){
-        $("#sql").removeClass("formated").addClass("formated2");
-      }
-    }
+    
   };
 
   const handleToggleMenu2 = () => {

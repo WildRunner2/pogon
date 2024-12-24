@@ -7,8 +7,8 @@
 
 body{
     height: 100vh;
-    background-color: #121212;
-    background-image: url('./images/boxs.jpg');
+    /* background-image: linear-gradient(to right,  #2e3235, #042933); */
+    background-image: url('./images/abstract.jpg');
     background-size: cover;
     background-position: cover;
 }
@@ -91,6 +91,7 @@ header{
     padding: 0 2rem;
     top: 0;
     background-color: #000;
+    background-image: linear-gradient(to top, #01060a, #042933);
 }
 
 .navbar{

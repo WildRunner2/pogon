@@ -68,7 +68,7 @@ const Register = (props) => {
     const password = loginForm.current.password.value;
     const conf_password = loginForm.current.conf_password.value;
 
-    if(password!=conf_password){
+    if(password!==conf_password){
       setResponseClass("login_res_show login_res_f");
       setResponseMsg(lang.translation.login.missingFields || "Passwords are not the same.");
       return;

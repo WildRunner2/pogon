@@ -77,7 +77,7 @@ const Register = (props) => {
     };
 
     emailjs
-      .send('service_iryz1z9', 'template_gvl5o66', message, 'hukFXsRwDW8g83sOM')
+      .send('service_r8ip6cl', 'template_gvl5o66', message, 'hukFXsRwDW8g83sOM')
       .then(() => {
         setResponseClass("login_res_show login_res_s");
         setResponseMsg(lang.translation.login.tokenSent || "Token sent to your email. Please verify.");

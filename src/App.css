@@ -739,6 +739,26 @@ header{
  padding: 30px;
 }
 
+/*REESULT*/
+
+.result{
+    background-color: #cacaca ;
+    min-height: 100vh;
+}
+.resF{
+    font-size: 2vw;
+}
+.resTable{
+}
+.tDark{
+    border-color: #000;
+    
+}
+.tHead{
+    color:#fff;
+    background-color: #f61616;
+}
+
 
 
 /* RESPONSIVE */

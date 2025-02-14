@@ -5,6 +5,8 @@ import axios from "axios";
 import pl from '../../translations/polski.json'
 import en from '../../translations/english.json'
 
+import auth from "../../env"; 
+
 const Reset = (props) => {
 
   const loginForm = useRef();
@@ -16,10 +18,13 @@ const Reset = (props) => {
     lang = en
   }
 
+  const dev = auth.DEV;
+  const host = dev ? auth.DEV_URL: auth.PROD_URL;
+
   const Login = (event) => {
     event.preventDefault(event)
     console.log("kk");
-    axios.post('https://jbsite-api.onrender.com/api/users/login',{
+    axios.post(host+"/api/users/login",{
       email: 'j.f.blazyk@gmail.com',
       password: 'toor'
 

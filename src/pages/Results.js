@@ -1,0 +1,109 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import auth from "../env";
+
+const Results = () => {
+  const [matchData, setMatchData] = useState([]);
+  
+    // Helper method to determine the host
+    const getHost = () => (auth.DEV ? auth.DEV_URL : auth.PROD_URL);
+    const host = getHost();
+  
+
+  useEffect(() => {
+    const fetchResults = async () => {
+      const path = `${host}/api/result/`;
+      console.log(path);
+      try {
+        const response = await axios.get(path);
+        if (response.data.data) setMatchData(response.data.data);
+      } catch (error) {
+        console.error("Error fetching results:", error);
+      }
+    };
+    fetchResults();
+  }, []);
+
+  const calculateStandings = (matches) => {
+    const teams = {};
+
+    matches.forEach(({ Team1, Team2, Result1, Result2 }) => {
+      if (!teams[Team1])
+        teams[Team1] = { name: Team1, points: 0, goalsFor: 0, goalsAgainst: 0, goalDifference: 0 };
+      if (!teams[Team2])
+        teams[Team2] = { name: Team2, points: 0, goalsFor: 0, goalsAgainst: 0, goalDifference: 0 };
+
+      teams[Team1].goalsFor += Result1;
+      teams[Team1].goalsAgainst += Result2;
+      teams[Team2].goalsFor += Result2;
+      teams[Team2].goalsAgainst += Result1;
+
+      if (Result1 > Result2) {
+        teams[Team1].points += 3;
+      } else if (Result1 < Result2) {
+        teams[Team2].points += 3;
+      } else {
+        teams[Team1].points += 1;
+        teams[Team2].points += 1;
+      }
+
+      teams[Team1].goalDifference = teams[Team1].goalsFor - teams[Team1].goalsAgainst;
+      teams[Team2].goalDifference = teams[Team2].goalsFor - teams[Team2].goalsAgainst;
+    });
+
+    return Object.values(teams).sort((a, b) => b.points - a.points || b.goalDifference - a.goalDifference);
+  };
+
+  return (
+    <div className="p-4">
+      <h2 className="text-xl font-bold mb-4">Turniej Pogoń Cup</h2>
+      <table className="w-full border-collapse border border-gray-300">
+        <thead>
+          <tr className="bg-gray-200">
+            <th className="border p-2">Miejsce</th>
+            <th className="border p-2">Drużyna</th>
+            <th className="border p-2">Punkty</th>
+            <th className="border p-2">Bramki Strzelone</th>
+            <th className="border p-2">Bramki Stracone</th>
+            <th className="border p-2">Bilans Bramkowy</th>
+          </tr>
+        </thead>
+        <tbody>
+          {calculateStandings(matchData).map((team, index) => (
+            <tr key={team.name} className="border">
+              <td className="border p-2 text-center">{index + 1}</td>
+              <td className="border p-2">{team.name}</td>
+              <td className="border p-2 text-center">{team.points}</td>
+              <td className="border p-2 text-center">{team.goalsFor}</td>
+              <td className="border p-2 text-center">{team.goalsAgainst}</td>
+              <td className="border p-2 text-center">{team.goalDifference}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {/* Tabela wyników meczów */}
+      <h2 className="text-xl font-bold mt-6 mb-4">Wyniki Meczów</h2>
+      <table className="w-full border-collapse border border-gray-300">
+        <thead>
+          <tr className="bg-gray-200">
+            <th className="border p-2">Mecz</th>
+            <th className="border p-2">Wynik</th>
+          </tr>
+        </thead>
+        <tbody>
+          {matchData
+            .sort((a, b) => b.Id - a.Id) // Sortowanie od najwyższego ID do najniższego
+            .map(({ Id, Team1, Team2, Result1, Result2 }) => (
+              <tr key={Id} className="border">
+                <td className="border p-2 text-center">{`${Team1} - ${Team2}`}</td>
+                <td className="border p-2 text-center">{`${Result1} - ${Result2}`}</td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default Results;

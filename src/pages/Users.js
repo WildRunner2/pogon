@@ -21,6 +21,9 @@ const Users = (props) => {
   const [showPassIcon, setShowPassIcon] = useState(faEye)
   const loginForm = useRef();
 
+  const dev = auth.DEV;
+  const host = dev ? auth.DEV_URL: auth.PROD_URL;
+
   // Language handling
   const language = props.language || "en";
   const lang = language === "pl" ? pl : en;
@@ -34,7 +37,7 @@ const Users = (props) => {
     const Bpassword = auth.BASIC_AUTH_PASSWORD
     const token = btoa(`${Busername}:${Bpassword}`); // Encode credentials
     axios
-      .post("https://jbsite-api.onrender.com/api/users/login", { email, password },
+      .post(host+"/api/users/login", { email, password },
         {
           headers: {
             Authorization: `Basic ${token}`,
@@ -43,7 +46,6 @@ const Users = (props) => {
       )
       .then((response) => {
         const status = response?.data?.data?.status;
-
         // Set response message and class based on login success
         if (status === "OK") {
           const newUser = {

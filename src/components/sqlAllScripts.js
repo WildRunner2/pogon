@@ -10,7 +10,7 @@ import { sql } from "@codemirror/lang-sql";
 import { OpenContext } from "../pages/Layout";
 import Cookies from "js-cookie";
 
-const SqlAddFormat = (props) => {
+const SqlAllScripts = (props) => {
   const openfromContext = useContext(OpenContext);
   const [formatLang, setFormatLang] = useState("transactsql");
   const [value, setValue] = useState(props?.data?.sql);
@@ -45,7 +45,6 @@ const SqlAddFormat = (props) => {
         console.error("Error fetching categories:", error);
       }
     };
-
     fetchCategories();
   }, [host]);
 
@@ -65,9 +64,11 @@ const SqlAddFormat = (props) => {
         console.error("Error fetching scripts:", error);
       }
     };
-
-    fetchScripts();
+    fetchScripts();    
   }, [host]);
+
+  console.log(scripts)
+  console.log(categories)
 
   // Helper methods for user and token
   const getUserId = () => {
@@ -158,7 +159,7 @@ const SqlAddFormat = (props) => {
   return (
     <>
       {/* SQL Add/Edit Form */}
-      <form ref={sqlForm} className="sqlForm">
+      {/* <form ref={sqlForm} className="sqlForm">
         <div className="sqlNavBar row">
           <div className="col-3">
             <label htmlFor="category" className="sql_form-label">Category</label>
@@ -219,106 +220,138 @@ const SqlAddFormat = (props) => {
             <option value="trino">trino</option>
           </select>
         </div>
-      </form>
+      </form> */}
 
       {/* List of All Scripts */}
       <div>
         <h3>All Scripts</h3>
-        {scripts.map((script) => (
-          <form key={script.id} className="sqlForm">
-            <div className="sqlNavBar row">
-              <div className="col-3">
-                <label htmlFor={`category-${script.id}`} className="sql_form-label">Category</label>
-                <select
-                  name={`category-${script.id}`}
-                  id={`category-${script.id}`}
-                  className="sqlCatChoose"
-                  defaultValue={script.categoryId}
-                  onChange={(e) => (script.categoryId = e.target.value)}
-                >
-                  {categories.map((category) => (
-                    <option key={category.categoryId} value={category.categoryId}>
-                      {category.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="col-7">
-                <label htmlFor={`script_name-${script.id}`} className="sql_form-label">Script Name</label>
-                <input
-                  className="sqlName"
-                  id={`script_name-${script.id}`}
-                  name={`script_name-${script.id}`}
-                  type="text"
-                  defaultValue={script.scriptName}
-                  onChange={(e) => (script.scriptName = e.target.value)}
-                />
-              </div>
-            </div>
-            <CodeMirror
-              className="formated2"
-              value={script.script}
-              name={`sql-${script.id}`}
-              id={`sql-${script.id}`}
-              spellCheck="false"
-              height="100%"
-              theme={basicDark}
-              extensions={[sql()]}
-              onChange={(val) =>
-                setScripts((prevScripts) =>
-                  prevScripts.map((s) =>
-                    s.id === script.id ? { ...s, script: val } : s
-                  )
-                )
-              }
-            />
-            <div className="sqlFormBar2">
-              <button
-                type="button"
-                onClick={() => {
-                  const formattedScript = format(script.script, { language: formatLang });
-                  setScripts((prevScripts) =>
-                    prevScripts.map((s) =>
-                      s.id === script.id ? { ...s, script: formattedScript } : s
-                    )
-                  );
-                }}
-                className="button_script"
-              >
-                Format
-              </button>
-              <button
-                type="button"
-                onClick={() =>
-                  setScripts((prevScripts) =>
-                    prevScripts.map((s) =>
-                      s.id === script.id ? { ...s, script: "" } : s
-                    )
-                  )
-                }
-                className="button_script"
-              >
-                Clear
-              </button>
-              <button
-                type="button"
-                onClick={() =>
-                  updateSql(script.id, script.script, script.categoryId, script.scriptName)
-                }
-                className="button_script"
-              >
-                Update
-              </button>
-              <button
-                type="button"
-                onClick={() => deleteSql(script.id)}
-                className="button_script"
-              >
-                Delete
-              </button>
-            </div>
-          </form>
-        ))}
+        
+
+        <div className="table-responsive-lg">
+          <table className="table">
+            <caption>List of users</caption>
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Category</th>
+                <th scope="col">Script</th>
+                <th scope="col">Handle</th>
+              </tr>
+            </thead>
+            <tbody>
+              {scripts.map((script) => (
+                <tr key={script.scriptId}>
+                  <th scope="row">{script.name}</th>
+                  <td id={`category-${script.scriptId}`}>
+                    {/* Find and render the matching category */}
+                    {categories
+                      .filter((category) => category.categoryId === script.categoryId)
+                      .map((category) => (
+                        <span key={category.categoryId}>{category.name}</span>
+                      ))}
+                  </td>
+                  <td>{script.script}</td>
+                  <td>@mdo</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+          {/* // <form key={script.id} className="sqlForm">
+          //   <div className="sqlNavBar row">
+          //     <div className="col-3">
+          //       <label htmlFor={`category-${script.id}`} className="sql_form-label">Category</label>
+          //       <select
+          //         name={`category-${script.id}`}
+          //         id={`category-${script.id}`}
+          //         className="sqlCatChoose"
+          //         defaultValue={script.categoryId}
+          //         onChange={(e) => (script.categoryId = e.target.value)}
+          //       >
+          //         {categories.map((category) => (
+          //           <option key={category.categoryId} value={category.categoryId}>
+          //             {category.name}
+          //           </option>
+          //         ))}
+          //       </select>
+          //     </div>
+          //     <div className="col-7">
+          //       <label htmlFor={`script_name-${script.id}`} className="sql_form-label">Script Name</label>
+          //       <input
+          //         className="sqlName"
+          //         id={`script_name-${script.id}`}
+          //         name={`script_name-${script.id}`}
+          //         type="text"
+          //         defaultValue={script.scriptName}
+          //         onChange={(e) => (script.scriptName = e.target.value)}
+          //       />
+          //     </div>
+          //   </div>
+          //   <CodeMirror
+          //     className="formated2"
+          //     value={script.script}
+          //     name={`sql-${script.id}`}
+          //     id={`sql-${script.id}`}
+          //     spellCheck="false"
+          //     height="100%"
+          //     theme={basicDark}
+          //     extensions={[sql()]}
+          //     onChange={(val) =>
+          //       setScripts((prevScripts) =>
+          //         prevScripts.map((s) =>
+          //           s.id === script.id ? { ...s, script: val } : s
+          //         )
+          //       )
+          //     }
+          //   />
+          //   <div className="sqlFormBar2">
+          //     <button
+          //       type="button"
+          //       onClick={() => {
+          //         const formattedScript = format(script.script, { language: formatLang });
+          //         setScripts((prevScripts) =>
+          //           prevScripts.map((s) =>
+          //             s.id === script.id ? { ...s, script: formattedScript } : s
+          //           )
+          //         );
+          //       }}
+          //       className="button_script"
+          //     >
+          //       Format
+          //     </button>
+          //     <button
+          //       type="button"
+          //       onClick={() =>
+          //         setScripts((prevScripts) =>
+          //           prevScripts.map((s) =>
+          //             s.id === script.id ? { ...s, script: "" } : s
+          //           )
+          //         )
+          //       }
+          //       className="button_script"
+          //     >
+          //       Clear
+          //     </button>
+          //     <button
+          //       type="button"
+          //       onClick={() =>
+          //         updateSql(script.id, script.script, script.categoryId, script.scriptName)
+          //       }
+          //       className="button_script"
+          //     >
+          //       Update
+          //     </button>
+          //     <button
+          //       type="button"
+          //       onClick={() => deleteSql(script.id)}
+          //       className="button_script"
+          //     >
+          //       Delete
+          //     </button>
+          //   </div>
+          // </form>
+        // ))} */}
       </div>
 
       {/* Modal for Success/Failure Messages */}
@@ -332,4 +365,4 @@ const SqlAddFormat = (props) => {
   );
 };
 
-export default SqlAddFormat;
+export default SqlAllScripts;

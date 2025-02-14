@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import auth from "../env";
 
 const Results = () => {
   const [matchData, setMatchData] = useState([]);
   const [newMatch, setNewMatch] = useState({ team1: "", team2: "", result1: "", result2: "" });
   const [editingMatch, setEditingMatch] = useState(null);
-  const host = "http://localhost:3010";
+  // Helper method to determine the host
+      const getHost = () => (auth.DEV ? auth.DEV_URL : auth.PROD_URL);
+      const host = getHost();
 
   // Funkcja do pobierania wyników
   const fetchResults = async () => {

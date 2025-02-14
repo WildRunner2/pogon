@@ -56,7 +56,7 @@ const Results = () => {
 
   return (
     <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">Tabela Ligowa</h2>
+      <h2 className="text-xl font-bold mb-4">Turniej Pogoń Cup</h2>
       <table className="w-full border-collapse border border-gray-300">
         <thead>
           <tr className="bg-gray-200">

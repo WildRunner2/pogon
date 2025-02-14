@@ -12,6 +12,8 @@ const Change = (props) => {
   const [responseMsg, setResponseMsg] = useState("");
   const [responseClass, setResponseClass] = useState("login_res_hide");
 
+  const dev = auth.DEV;
+  const host = dev ? "http://localhost:3010 ": "https://jbsite-api.onrender.com";
 
   let lang
   if (language === 'pl') {
@@ -30,7 +32,7 @@ const Change = (props) => {
     const Bpassword = auth.BASIC_AUTH_PASSWORD
     const token = btoa(`${Busername}:${Bpassword}`); // Encode credentials
     axios
-      .post("https://jbsite-api.onrender.com/api/users/password", { email, cur_password, new_password, new_conf_password},
+      .post(host+"/api/users/password", { email, cur_password, new_password, new_conf_password},
         {
           headers: {
             Authorization: `Basic ${token}`,

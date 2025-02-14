@@ -7,11 +7,15 @@ import Contact from "./pages/Contact";
 import NoPage from "./pages/NoPage";
 import Diagrams from "./pages/diagrams";
 import SqlScripts from "./pages/SqlScripts";
+import SqlAllScripts from "./components/sqlAllScripts";
 import ThreeDeePrints from "./pages/3dprints";
 import Users from "./pages/Users";
 import Register from "./pages/user/register";
 import Reset from "./pages/user/reset";
 import Change from "./pages/user/change";
+import Results from "./pages/Results";
+import ResultsAdmin from "./pages/ResultsAdmin";
+
 import "./App.css";
 
 // Initialize user data in cookies
@@ -78,13 +82,16 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
+            <Route path="results" element={<Results />} />
             <Route path="contact" element={<Contact />} />
             {/* Conditionally render routes based on sessionData */}
             {sessionData?.logged && (
               <>
                 <Route path="sqlscripts" element={<SqlScripts />} />
+                <Route path="sqlallscripts" element={<SqlAllScripts />} />
                 <Route path="3dprints" element={<ThreeDeePrints />} />
                 <Route path="diagrams" element={<Diagrams />} />
+                <Route path="resultsAdmin" element={<ResultsAdmin />} />
                 
                 <Route path="users/change" element={<Change />} />
               </>

@@ -510,6 +510,36 @@ header{
   min-height: 400px;
 }
 
+.sqlNavBar{
+    justify-content: center;
+
+}
+.sql_form-label{
+    text-align: center;
+    font-size: 1.01rem;
+
+}
+.sqlName{
+    border-radius: 5px;
+    border: none;
+    background-color: #cacaca;
+    outline: none;
+    margin-bottom: 8px;
+    min-width: 100%;
+    margin-left:1rem;
+    padding: 8px;
+}
+
+.sqlCatChoose{
+    left: 0;
+    border-radius: 5px;
+    border: none;
+    background-color: #cacaca;
+    outline: none;
+    min-height: 2.5rem;
+    min-width: 100%;
+    
+}
 
 .formated{
     text-align: left;

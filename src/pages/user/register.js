@@ -25,6 +25,10 @@ const Register = (props) => {
   const [inputTypeConf, setInputypeConf] = useState("password")
   const [showPassIconConf, setShowPassIconConf] = useState(faEye)
 
+  const dev = auth.DEV;
+  const host = dev ? auth.DEV_URL: auth.PROD_URL;
+
+
 
   let lang;
   if (language === 'pl') {
@@ -136,11 +140,11 @@ const Register = (props) => {
 
     const Busername = auth.BASIC_AUTH_USERNAME;
     const Bpassword = auth.BASIC_AUTH_PASSWORD;
-    const token = btoa(`${Busername}:${Bpassword}`); // Encode credentials
+    const token = btoa(`${Busername}:${Bpassword}`); // Encode credentials    
 
     axios
       .post(
-        "https://jbsite-api.onrender.com/api/users/",
+        host+"/api/users/",
         { email, login, password, conf_password },
         {
           headers: {

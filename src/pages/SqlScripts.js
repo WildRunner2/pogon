@@ -11,7 +11,7 @@ const SqlScripts = (props) => {
   return (
     <div className="sqlscripts">
       <h1>SQL Scripts</h1>
-      <p>Content under development, for now only formatting of sql scripts is available</p>
+      
 
       <div className="sqlContainer">     
 

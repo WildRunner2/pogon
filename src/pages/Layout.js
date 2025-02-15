@@ -104,7 +104,7 @@ const Layout = (props) => {
             </div>
             <ul className="links">
               <li><Link onClick={handleToggleMenu3} to="/">Home</Link></li>
-              <li><Link onClick={handleToggleMenu3} to="/results">Wyniki</Link></li>
+              {/* <li><Link onClick={handleToggleMenu3} to="/results">Wyniki</Link></li> */}
               <li><Link onClick={handleToggleMenu3} to="/resultsAdmin">Wyniki Admin</Link></li>
               <li><Link onClick={handleToggleMenu3} to="/diagrams">BDD</Link></li>
               <li><Link onClick={handleToggleMenu3} to="/sqlscripts">SqlScripts</Link></li>
@@ -140,11 +140,11 @@ const Layout = (props) => {
                 Home
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link onClick={handleToggleMenu} to="/results">
                 Wyniki
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link onClick={handleToggleMenu} to="/resultsAdmin">
                 Wyniki Admin

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Router } from "react-router-dom";
 import React, { createContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import Layout from "./pages/Layout";
@@ -25,7 +25,7 @@ if (!Cookies.get("user")) {
 
 // Create a context for session data
 export const SessionContext = createContext();
-
+const Link1 = () => <Results />
 function App() {
   const [sessionData, setSessionData] = useState(null);
   const [showCookiePopout, setShowCookiePopout] = useState(false);
@@ -60,6 +60,7 @@ function App() {
   };
 
   return (
+    <>
     <SessionContext.Provider value={{ sessionData, setSessionData }}>
       {showCookiePopout && (
           <div className="cookie-popout-container">
@@ -79,12 +80,11 @@ function App() {
           </div>
         )}
       <BrowserRouter>
-        <Routes>
+      <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="results" element={<Results />} />
             <Route path="contact" element={<Contact />} />
-            {/* Conditionally render routes based on sessionData */}
+            {/* Other routes with layout and menu */}
             {sessionData?.logged && (
               <>
                 <Route path="sqlscripts" element={<SqlScripts />} />
@@ -92,20 +92,26 @@ function App() {
                 <Route path="3dprints" element={<ThreeDeePrints />} />
                 <Route path="diagrams" element={<Diagrams />} />
                 <Route path="resultsAdmin" element={<ResultsAdmin />} />
-                
                 <Route path="users/change" element={<Change />} />
               </>
             )}
             <Route path="users/reset" element={<Reset />} />
             <Route path="users" element={<Users />} />
             <Route path="users/register" element={<Register />} />
-            
-            <Route path="*" element={<NoPage />} />
           </Route>
+
+          {/* Route with LayoutNoMenu */}
+          <Route path="/results" element={<Results />}>
+            <Route index element={<Results />} />
+          </Route>
+
+          <Route path="*" element={<NoPage />} />
         </Routes>
         
+        
       </BrowserRouter>
-    </SessionContext.Provider>
+    </SessionContext.Provider></>
+    
   );
 }
 

@@ -7,6 +7,7 @@ const Results = () => {
   const [newMatch, setNewMatch] = useState({ team1: "", team2: "", result1: "", result2: "" });
   const [editingMatch, setEditingMatch] = useState(null);
   const [teamData, setTeamData] = useState([]); // State for storing teams
+  const [newTeamName, setNewTeamName] = useState(""); // State for new team name
 
   const getHost = () => (auth.DEV ? auth.DEV_URL : auth.PROD_URL);
   const host = getHost();
@@ -102,6 +103,22 @@ const Results = () => {
     }
   };
 
+  // Add new team
+  const handleAddTeam = async () => {
+    if (!newTeamName) return; // Don't add an empty team name
+    const newTeamData = {
+      teamName: newTeamName, // Use `teamName` for posting a new team
+    };
+
+    try {
+      await axios.post(`${host}/api/result/teams`, newTeamData);
+      setNewTeamName(""); // Clear the input field
+      fetchTeams(); // Refresh teams after adding
+    } catch (error) {
+      console.error("Error adding team:", error);
+    }
+  };
+
   // Helper function to calculate standings based on match results
   const calculateStandings = (matches) => {
     const teams = {};
@@ -161,8 +178,9 @@ const Results = () => {
           ))}
         </tbody>
       </table>
-           {/* All Matches Table */}
-           <br></br>
+
+      <br />
+      {/* All Matches Table */}
       <h2 className="text-xl font-bold mt-6 mb-4">Wyniki Meczów</h2>
       <table className="w-full border-collapse border border-gray-300 resF2">
         <thead>
@@ -199,7 +217,8 @@ const Results = () => {
             ))}
         </tbody>
       </table>
-      <br></br>
+
+      <br />
       {/* Match Management */}
       <h2 className="text-xl font-bold mt-6 mb-4">Dodaj lub Edytuj Mecz</h2>
       <div className="flex flex-col space-y-5">
@@ -211,11 +230,13 @@ const Results = () => {
           className="border p-1"
         >
           <option value="">Wybierz drużynę 1</option>
-          {teamData.map((team) => (
-            <option key={team.Id} value={team.Name}>
-              {team.Name}
-            </option>
-          ))}
+          {teamData
+            .filter((team) => team.Name !== "undefined") // Filter out "undefined" team names
+            .map((team) => (
+              <option key={team.Id} value={team.Name}>
+                {team.Name}
+              </option>
+            ))}
         </select>
         {/* Select Team 2 */}
         <select
@@ -225,11 +246,13 @@ const Results = () => {
           className="border p-1"
         >
           <option value="">Wybierz drużynę 2</option>
-          {teamData.map((team) => (
-            <option key={team.Id} value={team.Name}>
-              {team.Name}
-            </option>
-          ))}
+          {teamData
+            .filter((team) => team.Name !== "undefined") // Filter out "undefined" team names
+            .map((team) => (
+              <option key={team.Id} value={team.Name}>
+                {team.Name}
+              </option>
+            ))}
         </select>
 
         {/* Input for Result 1 */}
@@ -259,22 +282,40 @@ const Results = () => {
         </button>
       </div>
 
-     
+      {/* Add Team */}
+      <h2 className="text-xl font-bold mt-6 mb-4">Dodaj Drużynę</h2>
+      <div className="flex flex-col space-y-5">
+        <input
+          type="text"
+          value={newTeamName}
+          onChange={(e) => setNewTeamName(e.target.value)}
+          placeholder="Nazwa Drużyny"
+          className="border p-1"
+        />
+        <button
+          onClick={handleAddTeam}
+          className="border p-1 mt-2 btn-primary"
+        >
+          Dodaj Drużynę
+        </button>
+      </div>
 
       {/* Team List and Delete Team */}
       <h2 className="text-xl font-bold mt-6 mb-4">Drużyny</h2>
       <ul>
-        {teamData.map((team) => (
-          <li key={team.Id}>
-            <span>{team.Name}</span>
-            <button
-              onClick={() => handleDeleteTeam(team.Id)}
-              className="ml-2 text-red-500"
-            >
-              Usuń
-            </button>
-          </li>
-        ))}
+        {teamData
+          .filter((team) => team.Name !== "undefined") // Filter out undefined teams
+          .map((team) => (
+            <li key={team.Id}>
+              <span>{team.Name}</span>
+              <button
+                onClick={() => handleDeleteTeam(team.Id)}
+                className="ml-2 text-red-500"
+              >
+                Usuń
+              </button>
+            </li>
+          ))}
       </ul>
     </div>
   );

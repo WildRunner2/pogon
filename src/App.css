@@ -744,11 +744,14 @@ header{
 .result{
     background-color: #cacaca ;
     min-height: 100vh;
+    
 }
 .resF{
     font-size: 2vw;
 }
 .resTable{
+    max-width: 90vw;
+    margin:auto
 }
 .tDark{
     border-color: #000;

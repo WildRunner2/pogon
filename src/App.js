@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Router } from "react-router-dom";
 import React, { createContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import Layout from "./pages/Layout";
+import NoLayout from "./pages/NoLayout";
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
 import NoPage from "./pages/NoPage";
@@ -98,11 +99,12 @@ function App() {
             <Route path="users/reset" element={<Reset />} />
             <Route path="users" element={<Users />} />
             <Route path="users/register" element={<Register />} />
+            
           </Route>
 
           {/* Route with LayoutNoMenu */}
-          <Route path="/results" element={<Results />}>
-            <Route index element={<Results />} />
+          <Route path="/results" element={<NoLayout />}>
+          <Route index element={<Results />} />
           </Route>
 
           <Route path="*" element={<NoPage />} />

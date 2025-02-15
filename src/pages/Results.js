@@ -89,7 +89,7 @@ const Results = () => {
 
       {/* Tabela wyników meczów */}
       <h2 className="text-xl font-bold mt-6 mb-4 text-center">Wyniki Meczów</h2>
-      <div className="table-responsive">
+      <div className="table-responsive resTable">
         <table className="table table-bordered tDark">
           <thead className="thead-light tHead">
             <tr>

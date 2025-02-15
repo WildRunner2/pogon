@@ -4,6 +4,8 @@ import auth from "../env";
 
 const Results = () => {
   const [matchData, setMatchData] = useState([]);
+  const [gameDate, setGameDate] = useState("");
+  const [gameName, setGameName] = useState("");
 
   // Helper method to determine the host
   const getHost = () => (auth.DEV ? auth.DEV_URL : auth.PROD_URL);
@@ -20,7 +22,23 @@ const Results = () => {
         console.error("Error fetching results:", error);
       }
     };
+
+    const fetchGame = async () => {
+      const path = `${host}/api/result/game`;
+      console.log(path);
+      try {
+        const response = await axios.get(path);
+        if (response.data.data) {
+          setGameName(response.data.data[0].GameName);
+          setGameDate(response.data.data[0].GameDate);
+        }
+      } catch (error) {
+        console.error("Error fetching results:", error);
+      }
+    };
+
     fetchResults();
+    fetchGame();
   }, []);
 
   const calculateStandings = (matches) => {
@@ -56,7 +74,8 @@ const Results = () => {
   return (
     <div className="p-4 result resF">
       
-      <h1 className="text-xl font-bold mb-4 text-center">Turniej Pogoń Cup<img src="pogon.png" width="50" alt="Pogon" /></h1>
+      <h1 className="text-xl font-bold mb-4 text-center">{gameName}<img src="pogon.png" width="50" alt="Pogon" /></h1>
+      <h3 className="text-center">{gameDate}</h3>
       <h2 className="text-xl font-bold mb-4 text-center">Tabela</h2>
       
       {/* Tabela Ligowa - Standings */}
@@ -64,7 +83,7 @@ const Results = () => {
         <table className="table table-bordered tDark">
           <thead className="thead-dark tHead">
             <tr>
-              <th className="text-center">M.</th>
+              <th className="text-center">#</th>
               <th className="text-center">Drużyna</th>
               <th className="text-center">Punkty</th>
               <th className="text-center">B. Strzelone</th>

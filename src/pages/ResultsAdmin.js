@@ -8,9 +8,38 @@ const Results = () => {
   const [editingMatch, setEditingMatch] = useState(null);
   const [teamData, setTeamData] = useState([]); // State for storing teams
   const [newTeamName, setNewTeamName] = useState(""); // State for new team name
+  const [tournament, setTournament] = useState({ gameName: "", gameDate: "" });
 
   const getHost = () => (auth.DEV ? auth.DEV_URL : auth.PROD_URL);
   const host = getHost();
+
+
+// Fetch tournament data
+const fetchTournament = async () => {
+  try {
+    const response = await axios.get(`${host}/api/result/game`);
+    if (response.data.data.length > 0) setTournament(response.data.data[0]);
+  } catch (error) {
+    console.error("Error fetching tournament data:", error);
+  }
+};
+
+// Update tournament data
+const updateTournament = async () => {
+  try {
+    await axios.put(`${host}/api/result/game`, {
+      gameName: tournament.GameName,
+      gameDate: tournament.GameDate,
+    });
+    fetchTournament();
+  } catch (error) {
+    console.error("Error updating tournament:", error);
+  }
+};
+
+useEffect(() => {
+  fetchTournament();
+}, []);
 
   // Fetch teams data
   const fetchTeams = async () => {
@@ -157,7 +186,7 @@ const Results = () => {
       <table className="w-full border-collapse border border-gray-300 resF2">
         <thead>
           <tr className="bg-gray-200">
-            <th className="border p-2">Miejsce</th>
+            <th className="border p-2">#</th>
             <th className="border p-2">Drużyna</th>
             <th className="border p-2">Punkty</th>
             <th className="border p-2">Bramki Strzelone</th>
@@ -195,20 +224,20 @@ const Results = () => {
             .sort((a, b) => b.Id - a.Id)
             .map(({ Id, Team1, Team2, Result1, Result2 }) => (
               <tr key={Id} className="border">
-                <td className="border p-2 text-center">{`${Team1} - ${Team2}`}</td>
-                <td className="border p-2 text-center">{`${Result1} : ${Result2}`}</td>
-                <td className="border p-2 text-center">
+                <td className="border p-2 text-center ">{`${Team1} - ${Team2}`}</td>
+                <td className="border p-2 text-center ">{`${Result1} : ${Result2}`}</td>
+                <td className="border p-2 text-center ">
                   <button
                     onClick={() => {
                       setEditingMatch({ id: Id, team1: Team1, team2: Team2, result1: Result1, result2: Result2 });
                     }}
-                    className="btn-warning"
+                    className="btn-warning "
                   >
                     Edytuj
                   </button>
                   <button
                     onClick={() => handleDeleteMatch(Id)}
-                    className="btn-danger"
+                    className="btn-danger "
                   >
                     Usuń
                   </button>
@@ -221,15 +250,15 @@ const Results = () => {
       <br />
       {/* Match Management */}
       <h2 className="text-xl font-bold mt-6 mb-4">Dodaj lub Edytuj Mecz</h2>
-      <div className="flex flex-col space-y-5">
+      <div className="flex flex-col space-y-5 paddingAdd Teams2">
         {/* Select Team 1 */}
         <select
           name="team1"
           value={editingMatch ? editingMatch.team1 : newMatch.team1}
           onChange={handleInputChange}
-          className="border p-1"
+          className="border p-1 resultAddField bigFont2"
         >
-          <option value="">Wybierz drużynę 1</option>
+          <option value="" className="bigFont2">Drużyna 1</option>
           {teamData
             .filter((team) => team.Name !== "undefined") // Filter out "undefined" team names
             .map((team) => (
@@ -243,9 +272,9 @@ const Results = () => {
           name="team2"
           value={editingMatch ? editingMatch.team2 : newMatch.team2}
           onChange={handleInputChange}
-          className="border p-1"
+          className="border p-1 resultAddField bigFont2"
         >
-          <option value="">Wybierz drużynę 2</option>
+          <option value="">Drużyna 2</option>
           {teamData
             .filter((team) => team.Name !== "undefined") // Filter out "undefined" team names
             .map((team) => (
@@ -254,7 +283,7 @@ const Results = () => {
               </option>
             ))}
         </select>
-
+            <br></br>
         {/* Input for Result 1 */}
         <input
           type="number"
@@ -262,7 +291,7 @@ const Results = () => {
           placeholder="Wynik Drużyna 1"
           value={editingMatch ? editingMatch.result1 : newMatch.result1}
           onChange={handleInputChange}
-          className="border p-1"
+          className="border p-1 resultAddField bigFont2"
         />
         {/* Input for Result 2 */}
         <input
@@ -271,17 +300,18 @@ const Results = () => {
           placeholder="Wynik Drużyna 2"
           value={editingMatch ? editingMatch.result2 : newMatch.result2}
           onChange={handleInputChange}
-          className="border p-1"
+          className="border p-1 resultAddField bigFont2"
         />
+        <br></br>
         {/* Add or Edit Match Button */}
         <button
           onClick={editingMatch ? handleEditMatch : handleAddMatch}
-          className="border p-1 mt-2 btn-success"
+          className="border p-1 mt-2 btn-success bigFont butN2"
         >
           {editingMatch ? "Zapisz Edycję" : "Dodaj Mecz"}
         </button>
       </div>
-
+            
       {/* Add Team */}
       <h2 className="text-xl font-bold mt-6 mb-4">Dodaj Drużynę</h2>
       <div className="flex flex-col space-y-5">
@@ -290,33 +320,82 @@ const Results = () => {
           value={newTeamName}
           onChange={(e) => setNewTeamName(e.target.value)}
           placeholder="Nazwa Drużyny"
-          className="border p-1"
-        />
+          className="border p-1 resultAddField bigFont2"
+        /><br></br>
         <button
           onClick={handleAddTeam}
-          className="border p-1 mt-2 btn-primary"
+          className="border p-1 mt-2 btn-primary bigFont butN2"
         >
           Dodaj Drużynę
         </button>
       </div>
 
       {/* Team List and Delete Team */}
+      <div className="Teams2">
       <h2 className="text-xl font-bold mt-6 mb-4">Drużyny</h2>
-      <ul>
+      <table className="table  table-bordered table-hover fontWhite">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nazwa Drużyny</th>
+            <th>Akcje</th>
+          </tr>
+        </thead>
+        <tbody className="fontWhite">
+          {teamData
+            .filter((team) => team.Name !== "undefined")
+            .map((team, index) => (
+              <tr  key={team.Id}>
+                <td>{index + 1}</td>
+                <td>{team.Name}</td>
+                <td>
+                  <button 
+                    className="btn btn-danger" 
+                    onClick={() => handleDeleteTeam(team.Id)}
+                  >
+                    Usuń
+                  </button>
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
+    </div>
+    <div className="p-4 resF resF2 ">
+      {/* Tournament Name and Date */}
+      <h2 className="text-xl font-bold mb-4">Edytuj Turniej</h2>
+      <input
+        type="text"
+        value={tournament.GameName}
+        onChange={(e) => setTournament({ ...tournament, GameName: e.target.value })}
+        placeholder="Nazwa Turnieju"
+        className="border p-1 mb-2 bigFont"
+      />
+      <input
+        type="date"
+        value={tournament.GameDate}
+        onChange={(e) => setTournament({ ...tournament, GameDate: e.target.value })}
+        className="border p-1 mb-2 bigFont"
+      />
+      <br></br>
+      <button onClick={updateTournament} className=" btn btn-primary">Zapisz</button>
+    </div>
+      {/* <h2 className="text-xl font-bold mt-6 mb-4">Drużyny</h2>
+      <ul className="bigFont2 teamList2">
         {teamData
           .filter((team) => team.Name !== "undefined") // Filter out undefined teams
           .map((team) => (
-            <li key={team.Id}>
+            <li key={team.Id} className="teamList">
               <span>{team.Name}</span>
               <button
                 onClick={() => handleDeleteTeam(team.Id)}
-                className="ml-2 text-red-500"
+                className="ml-2 text-red-500 teamListBtn "
               >
                 Usuń
               </button>
             </li>
           ))}
-      </ul>
+      </ul> */}
     </div>
   );
 };

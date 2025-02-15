@@ -747,7 +747,7 @@ header{
     
 }
 .resF{
-    font-size: 1vw;
+    font-size: 1rem;
 }
 .resF2{
     margin: auto;
@@ -768,8 +768,53 @@ header{
 .rAh{
     max-width: 20vh;
 }
-
-
+.teamList{
+    border: #fff 1px solid;
+    width: 80%;
+    margin: auto;
+}
+.resultAddField{
+    min-width: 50%;
+    max-width: 50%;
+    min-height: 3rem;
+}
+.resultAddField2{
+    min-width: 20%;
+    min-height: 3rem;
+}
+.bigFont{
+    font-size: 1.2rem;
+}
+.bigFont2{
+    font-size: 0.8rem;
+}
+.paddingAdd{
+    padding-bottom: 1rem;
+    padding-top: -20px;
+}
+.butN2{
+    width: 70%;
+    border: #000 1px solid;
+    border-radius: 10px;
+}
+.teamListBtn{
+    display: inline;
+    /* margin-left: 50%; */
+}
+.Teams2{
+    padding-top: 2rem;
+    color: #FFFFFF;
+    font-size: 1rem;
+    max-width: 60%;
+    margin: auto;
+}
+.fontWhite{
+    color: #FFFFFF;
+}
+.tDark{
+    background-color: #fff;
+    margin-bottom: 2rem;
+}
 
 /* RESPONSIVE */
 
@@ -792,7 +837,10 @@ header{
     .resF{
         font-size: 2vw;
     }
-    
+    .Teams2{
+        
+        max-width: 100%;
+    }
 }
 
 @media (max-width: 576px) {
@@ -802,6 +850,10 @@ header{
     }
     .resF{
         font-size: 2vw;
+    }
+    .Teams2{
+        
+        max-width: 100%;
     }
     
 }

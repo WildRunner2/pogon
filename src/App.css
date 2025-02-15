@@ -749,6 +749,9 @@ header{
 .resF{
     font-size: 1vw;
 }
+.resF2{
+    margin: auto;
+}
 .resTable{
     max-width: 90vw;
     margin:auto
@@ -760,6 +763,9 @@ header{
 .tHead{
     color:#fff;
     background-color: #f61616;
+}
+.rAh{
+    max-width: 20vh;
 }
 
 

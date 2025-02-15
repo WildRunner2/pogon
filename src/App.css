@@ -754,7 +754,8 @@ header{
 }
 .resTable{
     max-width: 90vw;
-    margin:auto
+    margin:auto;
+    font-weight: bold;
 }
 .tDark{
     border-color: #000;

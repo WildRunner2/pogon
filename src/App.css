@@ -747,7 +747,7 @@ header{
     
 }
 .resF{
-    font-size: 2vw;
+    font-size: 1vw;
 }
 .resTable{
     max-width: 90vw;
@@ -782,6 +782,9 @@ header{
     .navbar{
         width: 100%;
     }
+    .resF{
+        font-size: 2vw;
+    }
     
 }
 
@@ -789,6 +792,9 @@ header{
     .dropdown_menu_open{
         left: 2rem;
         width: unset;
+    }
+    .resF{
+        font-size: 2vw;
     }
     
 }

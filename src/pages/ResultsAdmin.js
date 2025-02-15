@@ -6,11 +6,22 @@ const Results = () => {
   const [matchData, setMatchData] = useState([]);
   const [newMatch, setNewMatch] = useState({ team1: "", team2: "", result1: "", result2: "" });
   const [editingMatch, setEditingMatch] = useState(null);
-  // Helper method to determine the host
-      const getHost = () => (auth.DEV ? auth.DEV_URL : auth.PROD_URL);
-      const host = getHost();
+  const [teamData, setTeamData] = useState([]); // State for storing teams
 
-  // Funkcja do pobierania wyników
+  const getHost = () => (auth.DEV ? auth.DEV_URL : auth.PROD_URL);
+  const host = getHost();
+
+  // Fetch teams data
+  const fetchTeams = async () => {
+    try {
+      const response = await axios.get(`${host}/api/result/teams`);
+      if (response.data.data) setTeamData(response.data.data); // Set teams data
+    } catch (error) {
+      console.error("Error fetching teams:", error);
+    }
+  };
+
+  // Fetch match results
   const fetchResults = async () => {
     const path = `${host}/api/result/`;
     try {
@@ -21,7 +32,77 @@ const Results = () => {
     }
   };
 
-  // Funkcja do obliczania tabeli ligowej
+  // Fetch teams and results when component mounts
+  useEffect(() => {
+    fetchResults();
+    fetchTeams();
+  }, []);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    if (editingMatch) {
+      setEditingMatch({ ...editingMatch, [name]: value });
+    } else {
+      setNewMatch({ ...newMatch, [name]: value });
+    }
+  };
+
+  // Add match
+  const handleAddMatch = async () => {
+    const newMatchData = {
+      team1: newMatch.team1,
+      team2: newMatch.team2,
+      result1: newMatch.result1,
+      result2: newMatch.result2,
+    };
+    try {
+      await axios.post(`${host}/api/result/`, newMatchData);
+      setNewMatch({ team1: "", team2: "", result1: "", result2: "" }); // Clear form
+      fetchResults(); // Refresh results
+    } catch (error) {
+      console.error("Error adding match:", error);
+    }
+  };
+
+  // Edit match
+  const handleEditMatch = async () => {
+    const updatedMatchData = {
+      id: editingMatch.id,
+      team1: editingMatch.team1,
+      team2: editingMatch.team2,
+      result1: editingMatch.result1,
+      result2: editingMatch.result2,
+    };
+    try {
+      await axios.put(`${host}/api/result/`, updatedMatchData);
+      setEditingMatch(null); // Clear editing state
+      fetchResults(); // Refresh results
+    } catch (error) {
+      console.error("Error updating match:", error);
+    }
+  };
+
+  // Delete match
+  const handleDeleteMatch = async (id) => {
+    try {
+      await axios.delete(`${host}/api/result/`, { data: { id } });
+      fetchResults(); // Refresh results
+    } catch (error) {
+      console.error("Error deleting match:", error);
+    }
+  };
+
+  // Delete team
+  const handleDeleteTeam = async (teamId) => {
+    try {
+      await axios.delete(`${host}/api/result/teams`, { data: { id: teamId } });
+      fetchTeams(); // Refresh teams
+    } catch (error) {
+      console.error("Error deleting team:", error);
+    }
+  };
+
+  // Helper function to calculate standings based on match results
   const calculateStandings = (matches) => {
     const teams = {};
 
@@ -52,65 +133,11 @@ const Results = () => {
     return Object.values(teams).sort((a, b) => b.points - a.points || b.goalDifference - a.goalDifference);
   };
 
-  useEffect(() => {
-    fetchResults(); // Zamiast bezpośredniego wywołania, używamy fetchResults
-  }, []);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    if (editingMatch) {
-      setEditingMatch({ ...editingMatch, [name]: value });
-    } else {
-      setNewMatch({ ...newMatch, [name]: value });
-    }
-  };
-
-  const handleAddMatch = async () => {
-    const newMatchData = {
-      team1: newMatch.team1,
-      team2: newMatch.team2,
-      result1: newMatch.result1,
-      result2: newMatch.result2,
-    };
-    try {
-      await axios.post(`${host}/api/result/`, newMatchData);
-      setNewMatch({ team1: "", team2: "", result1: "", result2: "" }); // Clear form
-      fetchResults(); // Refresh the data
-    } catch (error) {
-      console.error("Error adding match:", error);
-    }
-  };
-
-  const handleEditMatch = async () => {
-    const updatedMatchData = {
-      id: editingMatch.id,
-      team1: editingMatch.team1,
-      team2: editingMatch.team2,
-      result1: editingMatch.result1,
-      result2: editingMatch.result2,
-    };
-    try {
-      await axios.put(`${host}/api/result/`, updatedMatchData);
-      setEditingMatch(null); // Clear editing state
-      fetchResults(); // Refresh the data
-    } catch (error) {
-      console.error("Error updating match:", error);
-    }
-  };
-
-  const handleDeleteMatch = async (id) => {
-    try {
-      await axios.delete(`${host}/api/result/`, { data: { id } });
-      fetchResults(); // Refresh the data
-    } catch (error) {
-      console.error("Error deleting match:", error);
-    }
-  };
-
   return (
-    <div className="p-4">
+    <div className="p-4 resF resF2">
+      {/* Matches Table */}
       <h2 className="text-xl font-bold mb-4">Tabela Ligowa</h2>
-      <table className="w-full border-collapse border border-gray-300">
+      <table className="w-full border-collapse border border-gray-300 resF2">
         <thead>
           <tr className="bg-gray-200">
             <th className="border p-2">Miejsce</th>
@@ -134,9 +161,10 @@ const Results = () => {
           ))}
         </tbody>
       </table>
-
+           {/* All Matches Table */}
+           <br></br>
       <h2 className="text-xl font-bold mt-6 mb-4">Wyniki Meczów</h2>
-      <table className="w-full border-collapse border border-gray-300">
+      <table className="w-full border-collapse border border-gray-300 resF2">
         <thead>
           <tr className="bg-gray-200">
             <th className="border p-2">Mecz</th>
@@ -150,59 +178,104 @@ const Results = () => {
             .map(({ Id, Team1, Team2, Result1, Result2 }) => (
               <tr key={Id} className="border">
                 <td className="border p-2 text-center">{`${Team1} - ${Team2}`}</td>
-                <td className="border p-2 text-center">{`${Result1} - ${Result2}`}</td>
+                <td className="border p-2 text-center">{`${Result1} : ${Result2}`}</td>
                 <td className="border p-2 text-center">
-                  <button onClick={() => setEditingMatch({ id: Id, team1: Team1, team2: Team2, result1: Result1, result2: Result2 })}>
+                  <button
+                    onClick={() => {
+                      setEditingMatch({ id: Id, team1: Team1, team2: Team2, result1: Result1, result2: Result2 });
+                    }}
+                    className="btn-warning"
+                  >
                     Edytuj
                   </button>
-                  <button onClick={() => handleDeleteMatch(Id)}>Usuń</button>
+                  <button
+                    onClick={() => handleDeleteMatch(Id)}
+                    className="btn-danger"
+                  >
+                    Usuń
+                  </button>
                 </td>
               </tr>
             ))}
         </tbody>
       </table>
-
+      <br></br>
+      {/* Match Management */}
       <h2 className="text-xl font-bold mt-6 mb-4">Dodaj lub Edytuj Mecz</h2>
-      <div>
-        <input
-          type="text"
+      <div className="flex flex-col space-y-5">
+        {/* Select Team 1 */}
+        <select
           name="team1"
-          placeholder="Drużyna 1"
           value={editingMatch ? editingMatch.team1 : newMatch.team1}
           onChange={handleInputChange}
-          className="border p-2"
-        />
-        <input
-          type="text"
+          className="border p-1"
+        >
+          <option value="">Wybierz drużynę 1</option>
+          {teamData.map((team) => (
+            <option key={team.Id} value={team.Name}>
+              {team.Name}
+            </option>
+          ))}
+        </select>
+        {/* Select Team 2 */}
+        <select
           name="team2"
-          placeholder="Drużyna 2"
           value={editingMatch ? editingMatch.team2 : newMatch.team2}
           onChange={handleInputChange}
-          className="border p-2"
-        />
+          className="border p-1"
+        >
+          <option value="">Wybierz drużynę 2</option>
+          {teamData.map((team) => (
+            <option key={team.Id} value={team.Name}>
+              {team.Name}
+            </option>
+          ))}
+        </select>
+
+        {/* Input for Result 1 */}
         <input
           type="number"
           name="result1"
           placeholder="Wynik Drużyna 1"
           value={editingMatch ? editingMatch.result1 : newMatch.result1}
           onChange={handleInputChange}
-          className="border p-2"
+          className="border p-1"
         />
+        {/* Input for Result 2 */}
         <input
           type="number"
           name="result2"
           placeholder="Wynik Drużyna 2"
           value={editingMatch ? editingMatch.result2 : newMatch.result2}
           onChange={handleInputChange}
-          className="border p-2"
+          className="border p-1"
         />
+        {/* Add or Edit Match Button */}
         <button
           onClick={editingMatch ? handleEditMatch : handleAddMatch}
-          className="border p-2 mt-2"
+          className="border p-1 mt-2 btn-success"
         >
           {editingMatch ? "Zapisz Edycję" : "Dodaj Mecz"}
         </button>
       </div>
+
+     
+
+      {/* Team List and Delete Team */}
+      <h2 className="text-xl font-bold mt-6 mb-4">Drużyny</h2>
+      <ul>
+        {teamData.map((team) => (
+          <li key={team.Id}>
+            <span>{team.Name}</span>
+            <button
+              onClick={() => handleDeleteTeam(team.Id)}
+              className="ml-2 text-red-500"
+            >
+              Usuń
+            </button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Router } from "react-router-dom";
+import { HashRouter , Routes, Route, Router } from "react-router-dom";
 import React, { createContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import Layout from "./pages/Layout";
@@ -80,7 +80,7 @@ function App() {
             </div>
           </div>
         )}
-      <BrowserRouter>
+      <HashRouter >
       <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
@@ -111,7 +111,7 @@ function App() {
         </Routes>
         
         
-      </BrowserRouter>
+      </HashRouter >
     </SessionContext.Provider></>
     
   );

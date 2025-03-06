@@ -90,7 +90,7 @@ useEffect(() => {
       
       await axios.post(`${host}/api/result/`, newMatchData);
 
-      setNewMatch({ team1: "", team2: "", result1: "", result2: "" }); // Clear form
+      setNewMatch({ team1: "", team2: "", result1: "", result2: "", status:"N" }); // Clear form
       fetchResults(); // Refresh results
     } catch (error) {
       console.error("Error adding match:", error);
@@ -157,7 +157,7 @@ useEffect(() => {
     const teams = {};
  
     matches.forEach(({ Team1, Team2, Result1, Result2, Status }) => {
-      if((Result1 != null && Result2!=null) && Status == "Z"){
+      if((Result1 != null && Result2!=null) && Status === "Z"){
       if (!teams[Team1])
         teams[Team1] = { name: Team1, points: 0, goalsFor: 0, goalsAgainst: 0, goalDifference: 0 };
       if (!teams[Team2])
@@ -189,8 +189,8 @@ useEffect(() => {
   };
 
   const getTeamMatchesCount = (matches, teamName) => {
-    return matches.filter(({ Team1, Team2, Result1, Result2 }) => 
-        (Team1 === teamName || Team2 === teamName) && Result1 != null && Result2 != null
+    return matches.filter(({ Team1, Team2, Result1, Result2, Status }) => 
+        (Team1 === teamName || Team2 === teamName) && Result1 != null && Result2 != null && Status ==="Z"
     ).length;
 };
 
@@ -327,12 +327,14 @@ useEffect(() => {
           onChange={handleInputChange}
           className="border p-1 resultAddField bigFont2"
         >
-          <option value={editingMatch? editingMatch.status : "N"}>{editingMatch? (editingMatch.status == "N" ? "Zaplanowany" : editingMatch.status == "Z" ? "Zakończony" :"W trakcie"): "Nowy"}</option>
-          <option value="N">Zaplanowany</option>
-          <option value="T">W trakcie</option>
-          <option value="Z">Zakończony</option>
+          <option value={editingMatch? editingMatch.status : "N"}>{editingMatch? (editingMatch.status == "N" ? "Zaplanowany" : editingMatch.status == "Z" ? "Zakończony" :"W trakcie"): "Nowy"}</option>          
+          <option value="N" hidden={editingMatch?.status === "N"}>Zaplanowany</option>
+          <option value="T" hidden={editingMatch?.status === "T"}>W trakcie</option>
+          <option value="Z" hidden={editingMatch?.status === "Z"}>Zakończony</option>
           
         </select>
+
+
         <br></br>
         {/* Add or Edit Match Button */}
         <button

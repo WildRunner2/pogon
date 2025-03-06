@@ -156,8 +156,8 @@ useEffect(() => {
   const calculateStandings = (matches) => {
     const teams = {};
  
-    matches.forEach(({ Team1, Team2, Result1, Result2 }) => {
-      if(Result1 =! null && Result2 != null){
+    matches.forEach(({ Team1, Team2, Result1, Result2, Status }) => {
+      if((Result1 != null && Result2!=null) && Status == "Z"){
       if (!teams[Team1])
         teams[Team1] = { name: Team1, points: 0, goalsFor: 0, goalsAgainst: 0, goalDifference: 0 };
       if (!teams[Team2])
@@ -167,6 +167,9 @@ useEffect(() => {
       teams[Team1].goalsAgainst += Result2;
       teams[Team2].goalsFor += Result2;
       teams[Team2].goalsAgainst += Result1;
+
+      teams[Team1].matchesPlayed++;
+      teams[Team2].matchesPlayed++;
 
       if (Result1 > Result2) {
         teams[Team1].points += 3;
@@ -185,6 +188,12 @@ useEffect(() => {
     return Object.values(teams).sort((a, b) => b.points - a.points || b.goalDifference - a.goalDifference);
   };
 
+  const getTeamMatchesCount = (matches, teamName) => {
+    return matches.filter(({ Team1, Team2, Result1, Result2 }) => 
+        (Team1 === teamName || Team2 === teamName) && Result1 != null && Result2 != null
+    ).length;
+};
+
   return (
     <div className="p-4 resF resF2">
       {/* Matches Table */}
@@ -195,6 +204,7 @@ useEffect(() => {
             <th className="border p-2">#</th>
             <th className="border p-2">Drużyna</th>
             <th className="border p-2">Punkty</th>
+            <th className="text-center">Mecze</th>
             <th className="border p-2">Bramki Strzelone</th>
             <th className="border p-2">Bramki Stracone</th>
             <th className="border p-2">Bilans Bramkowy</th>
@@ -206,6 +216,7 @@ useEffect(() => {
               <td className="border p-2 text-center">{index + 1}</td>
               <td className="border p-2">{team.name}</td>
               <td className="border p-2 text-center">{team.points}</td>
+              <td className="border p-2 text-center">{getTeamMatchesCount(matchData, team.name)}</td>
               <td className="border p-2 text-center">{team.goalsFor}</td>
               <td className="border p-2 text-center">{team.goalsAgainst}</td>
               <td className="border p-2 text-center">{team.goalDifference}</td>

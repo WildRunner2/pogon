@@ -45,6 +45,7 @@ const Results = () => {
     const teams = {};
 
     matches.forEach(({ Team1, Team2, Result1, Result2 }) => {
+      if(Result1 =! null && Result2 != null){
       if (!teams[Team1])
         teams[Team1] = { name: Team1, points: 0, goalsFor: 0, goalsAgainst: 0, goalDifference: 0 };
       if (!teams[Team2])
@@ -66,6 +67,7 @@ const Results = () => {
 
       teams[Team1].goalDifference = teams[Team1].goalsFor - teams[Team1].goalsAgainst;
       teams[Team2].goalDifference = teams[Team2].goalsFor - teams[Team2].goalsAgainst;
+    }
     });
 
     return Object.values(teams).sort((a, b) => b.points - a.points || b.goalDifference - a.goalDifference);
@@ -114,15 +116,17 @@ const Results = () => {
             <tr>
               <th className="text-center">Mecz</th>
               <th className="text-center">Wynik</th>
+              <th className="text-center">Status</th>
             </tr>
           </thead>
           <tbody>
             {matchData
               .sort((a, b) => b.Id - a.Id) // Sortowanie od najwyższego ID do najniższego
-              .map(({ Id, Team1, Team2, Result1, Result2 }) => (
+              .map(({ Id, Team1, Team2, Result1, Result2, Status }) => (                
                 <tr key={Id}>
                   <td className="text-center">{`${Team1} - ${Team2}`}</td>
-                  <td className="text-center">{`${Result1} - ${Result2}`}</td>
+                  <td className="text-center">{`${Result1 == null ? "-": Result1} - ${Result2 == null ? "-" : Result2}`}</td>
+                  <td className="text-center">{`${Status == "N" ? "Zaplanowany": Status == "Z"? "Zakończony" : "W trakcie"}`}</td>
                 </tr>
               ))}
           </tbody>

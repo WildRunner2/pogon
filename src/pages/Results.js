@@ -79,8 +79,8 @@ const Results = () => {
     return Object.values(teams).sort((a, b) => b.points - a.points || b.goalDifference - a.goalDifference);
   };
   const getTeamMatchesCount = (matches, teamName) => {
-    return matches.filter(({ Team1, Team2, Result1, Result2 }) => 
-        (Team1 === teamName || Team2 === teamName) && Result1 != null && Result2 != null
+    return matches.filter(({ Team1, Team2, Result1, Result2, Status }) => 
+        (Team1 === teamName || Team2 === teamName) && Result1 != null && Result2 != null && Status ==="Z"
     ).length;
 };
   return (

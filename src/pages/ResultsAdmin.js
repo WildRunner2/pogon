@@ -4,7 +4,7 @@ import auth from "../env";
 
 const Results = () => {
   const [matchData, setMatchData] = useState([]);
-  const [newMatch, setNewMatch] = useState({ team1: "", team2: "", result1: "", result2: "" });
+  const [newMatch, setNewMatch] = useState({ team1: "", team2: "", result1: "", result2: "", status: "N" });
   const [editingMatch, setEditingMatch] = useState(null);
   const [teamData, setTeamData] = useState([]); // State for storing teams
   const [newTeamName, setNewTeamName] = useState(""); // State for new team name
@@ -82,11 +82,14 @@ useEffect(() => {
     const newMatchData = {
       team1: newMatch.team1,
       team2: newMatch.team2,
-      result1: newMatch.result1,
-      result2: newMatch.result2,
+      result1: newMatch.result1 == '' ? null : newMatch.result1,
+      result2: newMatch.result2 == '' ? null : newMatch.result2,
+      status: newMatch.status,
     };
     try {
+      
       await axios.post(`${host}/api/result/`, newMatchData);
+
       setNewMatch({ team1: "", team2: "", result1: "", result2: "" }); // Clear form
       fetchResults(); // Refresh results
     } catch (error) {
@@ -102,6 +105,7 @@ useEffect(() => {
       team2: editingMatch.team2,
       result1: editingMatch.result1,
       result2: editingMatch.result2,
+      status: editingMatch.status,
     };
     try {
       await axios.put(`${host}/api/result/`, updatedMatchData);
@@ -151,8 +155,9 @@ useEffect(() => {
   // Helper function to calculate standings based on match results
   const calculateStandings = (matches) => {
     const teams = {};
-
+ 
     matches.forEach(({ Team1, Team2, Result1, Result2 }) => {
+      if(Result1 =! null && Result2 != null){
       if (!teams[Team1])
         teams[Team1] = { name: Team1, points: 0, goalsFor: 0, goalsAgainst: 0, goalDifference: 0 };
       if (!teams[Team2])
@@ -174,6 +179,7 @@ useEffect(() => {
 
       teams[Team1].goalDifference = teams[Team1].goalsFor - teams[Team1].goalsAgainst;
       teams[Team2].goalDifference = teams[Team2].goalsFor - teams[Team2].goalsAgainst;
+    }
     });
 
     return Object.values(teams).sort((a, b) => b.points - a.points || b.goalDifference - a.goalDifference);
@@ -222,14 +228,15 @@ useEffect(() => {
         <tbody>
           {matchData
             .sort((a, b) => b.Id - a.Id)
-            .map(({ Id, Team1, Team2, Result1, Result2 }) => (
+            .map(({ Id, Team1, Team2, Result1, Result2,Status }) => (
               <tr key={Id} className="border">
                 <td className="border p-2 text-center ">{`${Team1} - ${Team2}`}</td>
                 <td className="border p-2 text-center ">{`${Result1} : ${Result2}`}</td>
+                <td className="text-center">{`${Status}`}</td>
                 <td className="border p-2 text-center ">
                   <button
                     onClick={() => {
-                      setEditingMatch({ id: Id, team1: Team1, team2: Team2, result1: Result1, result2: Result2 });
+                      setEditingMatch({ id: Id, team1: Team1, team2: Team2, result1: Result1, result2: Result2, status: Status });
                     }}
                     className="btn-warning "
                   >
@@ -294,6 +301,7 @@ useEffect(() => {
           className="border p-1 resultAddField bigFont2"
         />
         {/* Input for Result 2 */}
+        
         <input
           type="number"
           name="result2"
@@ -302,6 +310,18 @@ useEffect(() => {
           onChange={handleInputChange}
           className="border p-1 resultAddField bigFont2"
         />
+        <select
+          name="status"
+          value={editingMatch ? editingMatch.status : newMatch.status}
+          onChange={handleInputChange}
+          className="border p-1 resultAddField bigFont2"
+        >
+          <option value={editingMatch? editingMatch.status : "N"}>{editingMatch? (editingMatch.status == "N" ? "Zaplanowany" : editingMatch.status == "Z" ? "Zakończony" :"W trakcie"): "Nowy"}</option>
+          <option value="N">Zaplanowany</option>
+          <option value="T">W trakcie</option>
+          <option value="Z">Zakończony</option>
+          
+        </select>
         <br></br>
         {/* Add or Edit Match Button */}
         <button

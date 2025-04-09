@@ -10,7 +10,7 @@ const Home = () =>
       
         <div className="about_me">
           <h1>WELCOME</h1>
-          <p>My name is Jakub, I'm' a software engineer. </p>
+          <p>My name is Jakub, I'm a software engineer. </p>
           <p>I work as a .Net developer in a company producing ERP systems.</p>
           <p>This is my personal website where I host my web applications and data.</p>
           <p>On this web you can use the BDD diagrams generator application that I created for my engineering thesis defense.</p>

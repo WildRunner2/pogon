@@ -85,21 +85,27 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="contact" element={<Contact />} />
+            <Route path="diagrams" element={<Diagrams />} />
             {/* Other routes with layout and menu */}
             {sessionData?.logged && (
               <>
                 <Route path="sqlscripts" element={<SqlScripts />} />
                 <Route path="sqlallscripts" element={<SqlAllScripts />} />
                 <Route path="3dprints" element={<ThreeDeePrints />} />
-                <Route path="diagrams" element={<Diagrams />} />
-                <Route path="resultsAdmin" element={<ResultsAdmin />} />
+                
                 <Route path="users/change" element={<Change />} />
+                {(sessionData.login === "KM" || sessionData.login === "Admin") && (
+                <>
+                  <Route path="resultsAdmin" element={<ResultsAdmin />} />
+                  
+                </>
+              )}                
               </>
             )}
             <Route path="users/reset" element={<Reset />} />
             <Route path="users" element={<Users />} />
             <Route path="users/register" element={<Register />} />
-            
+            <Route path="*" element={<NoPage />} />
           </Route>
 
           {/* Route with LayoutNoMenu */}
@@ -107,7 +113,7 @@ function App() {
           <Route index element={<Results />} />
           </Route>
 
-          <Route path="*" element={<NoPage />} />
+          
         </Routes>
         
         

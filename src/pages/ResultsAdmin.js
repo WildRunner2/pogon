@@ -4,7 +4,7 @@ import auth from "../env";
 
 const Results = () => {
   const [matchData, setMatchData] = useState([]);
-  const [newMatch, setNewMatch] = useState([]);
+  const [newMatch, setNewMatch] = useState({ team1: "", team2: "", result1: "", result2: "", status: "N" });
   const [editingMatch, setEditingMatch] = useState(null);
   const [teamData, setTeamData] = useState([]); // State for storing teams
   const [newTeamName, setNewTeamName] = useState(""); // State for new team name
@@ -142,19 +142,23 @@ const handleAddMatch = async () => {
     return Object.values(teams).sort((a, b) => b.points - a.points || b.goalDifference - a.goalDifference);
   };
 
-  const generateSchedule = (teams) => {
-    if (teams.length < 2) {
-      return [];
-    }
-  
-    let matches = [];
-    let round = 1;
-    let totalRounds = teams.length - 1;
-    let half = Math.floor(teams.length / 2);
-  
-    let teamList = [...teams];
-    if (teams.length % 2 !== 0) {
-      teamList.push(null); // Dodajemy "bye" dla nieparzystej liczby drużyn
+  // Add match
+  const handleAddMatch = async () => {
+    const newMatchData = {
+      team1: newMatch.team1,
+      team2: newMatch.team2,
+      result1: newMatch.result1 == '' ? null : newMatch.result1,
+      result2: newMatch.result2 == '' ? null : newMatch.result2,
+      status: newMatch.status,
+    };
+    try {
+      
+      await axios.post(`${host}/api/result/`, newMatchData);
+
+      setNewMatch({ team1: "", team2: "", result1: "", result2: "", status:"N" }); // Clear form
+      fetchResults(); // Refresh results
+    } catch (error) {
+      console.error("Error adding match:", error);
     }
   
     for (let r = 0; r < totalRounds; r++) {
@@ -185,6 +189,7 @@ const handleAddMatch = async () => {
       team2: editingMatch.team2,
       result1: editingMatch.result1,
       result2: editingMatch.result2,
+      status: editingMatch.status,
     };
     try {
       await axios.put(`${host}/api/result/result`, updatedMatchData);
@@ -239,33 +244,79 @@ const handleAddMatch = async () => {
       console.error("Error adding team:", error);
     }
   };
+
+  // Helper function to calculate standings based on match results
+  const calculateStandings = (matches) => {
+    const teams = {};
  
-  
+    matches.forEach(({ Team1, Team2, Result1, Result2, Status }) => {
+      if((Result1 != null && Result2!=null) && Status === "Z"){
+      if (!teams[Team1])
+        teams[Team1] = { name: Team1, points: 0, goalsFor: 0, goalsAgainst: 0, goalDifference: 0 };
+      if (!teams[Team2])
+        teams[Team2] = { name: Team2, points: 0, goalsFor: 0, goalsAgainst: 0, goalDifference: 0 };
+
+      teams[Team1].goalsFor += Result1;
+      teams[Team1].goalsAgainst += Result2;
+      teams[Team2].goalsFor += Result2;
+      teams[Team2].goalsAgainst += Result1;
+
+      teams[Team1].matchesPlayed++;
+      teams[Team2].matchesPlayed++;
+
+      if (Result1 > Result2) {
+        teams[Team1].points += 3;
+      } else if (Result1 < Result2) {
+        teams[Team2].points += 3;
+      } else {
+        teams[Team1].points += 1;
+        teams[Team2].points += 1;
+      }
+
+      teams[Team1].goalDifference = teams[Team1].goalsFor - teams[Team1].goalsAgainst;
+      teams[Team2].goalDifference = teams[Team2].goalsFor - teams[Team2].goalsAgainst;
+    }
+    });
+
+    return Object.values(teams).sort((a, b) => b.points - a.points || b.goalDifference - a.goalDifference);
+  };
+
+  const getTeamMatchesCount = (matches, teamName) => {
+    return matches.filter(({ Team1, Team2, Result1, Result2, Status }) => 
+        (Team1 === teamName || Team2 === teamName) && Result1 != null && Result2 != null && Status ==="Z"
+    ).length;
+};
 
   return (
-    <div className="p-4 resF resF2 resAdmin">
-      <h2 className="text-xl font-bold mt-6 mb-4 ">Wybierz Turniej</h2>
-      <div className="flex paddingAdd">        
-        <select
-          name="turnament"
-          value={tournamentsData.GameName}
-          onChange={handleTournamentChange}
-          className="border p-1 resultAddField3 bigFont2"
-        >
-          <option value="">Choose Tournament</option>
-          {tournamentsData
-            .filter((game) => game.GameName !== "undefined")
-            .map((game) => (              
-              <option key={game.Id} value={game.Id}>
-                {game.GameDate} : {game.GameName}
-              </option>
-            ))}
-        </select>        
-        <button className="border p-1 mt-2 btn-success bigFont butN2 " onClick={handleAddMatch}>Generate Matches</button>
-      </div>      
-      
-      
-
+    <div className="p-4 resF resF2">
+      {/* Matches Table */}
+      <h2 className="text-xl font-bold mb-4">Tabela Ligowa</h2>
+      <table className="w-full border-collapse border border-gray-300 resF2">
+        <thead>
+          <tr className="bg-gray-200">
+            <th className="border p-2">#</th>
+            <th className="border p-2">Drużyna</th>
+            <th className="border p-2">Punkty</th>
+            <th className="text-center">Mecze</th>
+            <th className="border p-2">Bramki Strzelone</th>
+            <th className="border p-2">Bramki Stracone</th>
+            <th className="border p-2">Bilans Bramkowy</th>
+          </tr>
+        </thead>
+        <tbody>
+          {calculateStandings(matchData).map((team, index) => (
+            <tr key={team.name} className="border">
+              <td className="border p-2 text-center">{index + 1}</td>
+              <td className="border p-2">{team.name}</td>
+              <td className="border p-2 text-center">{team.points}</td>
+              <td className="border p-2 text-center">{getTeamMatchesCount(matchData, team.name)}</td>
+              <td className="border p-2 text-center">{team.goalsFor}</td>
+              <td className="border p-2 text-center">{team.goalsAgainst}</td>
+              <td className="border p-2 text-center">{team.goalDifference}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
 
       <h2 className="text-xl font-bold mt-6 mb-4">Wyniki Meczów</h2>
       <table className="w-full border-collapse border border-gray-300 resF2">
@@ -280,15 +331,15 @@ const handleAddMatch = async () => {
         <tbody>
           {matchData
             .sort((a, b) => b.Id - a.Id)
-            .map(({ Id, Team1, Team2, Result1, Result2, Status }) => (
+            .map(({ Id, Team1, Team2, Result1, Result2,Status }) => (
               <tr key={Id} className="border">
                 <td className="border p-2 text-center ">{`${Team1} - ${Team2}`}</td>
-                <td className="border p-2 text-center ">{`${Result1== null ? '-' : Result1} : ${Result2== null ? '-' : Result2}`}</td>
-                <td className="border p-2 text-center ">{`${Status}`}</td>
+                <td className="border p-2 text-center ">{`${Result1} : ${Result2}`}</td>
+                <td className="text-center">{`${Status}`}</td>
                 <td className="border p-2 text-center ">
                   <button
                     onClick={() => {
-                      setEditingMatch({ id: Id, team1: Team1, team2: Team2, result1: Result1, result2: Result2 });
+                      setEditingMatch({ id: Id, team1: Team1, team2: Team2, result1: Result1, result2: Result2, status: Status });
                     }}
                     className="btn-warning "
                   >
@@ -354,6 +405,7 @@ const handleAddMatch = async () => {
           className="border p-1 resultAddField bigFont2"
         />
         {/* Input for Result 2 */}
+        
         <input
           type="number"
           name="result2"
@@ -363,17 +415,19 @@ const handleAddMatch = async () => {
           className="border p-1 resultAddField bigFont2"
         />
         <select
-          name="team2"
-          value={editingMatch ? editingMatch.Status : newMatch.Status}
+          name="status"
+          value={editingMatch ? editingMatch.status : newMatch.status}
           onChange={handleInputChange}
           className="border p-1 resultAddField bigFont2"
         >
-          <option value="">Status</option>        
-              
-              <option key="1" value="Z">NOWY</option>
-              <option key="2" value="Z">ROZPOCZĘTY</option>
-              <option key="3" value="Z">ZAKONCZONY</option>
+          <option value={editingMatch? editingMatch.status : "N"}>{editingMatch? (editingMatch.status == "N" ? "Zaplanowany" : editingMatch.status == "Z" ? "Zakończony" :"W trakcie"): "Nowy"}</option>          
+          <option value="N" hidden={editingMatch?.status === "N"}>Zaplanowany</option>
+          <option value="T" hidden={editingMatch?.status === "T"}>W trakcie</option>
+          <option value="Z" hidden={editingMatch?.status === "Z"}>Zakończony</option>
+          
         </select>
+
+
         <br></br>
         {/* Add or Edit Match Button */}
         <button

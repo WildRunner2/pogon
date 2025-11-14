@@ -55,34 +55,44 @@ const Results = () => {
     const teams = {};
 
     matches.forEach(({ Team1, Team2, Result1, Result2, Status }) => {
-      if(Result1 != null && Result2 != null && Status != 'N'){
-          if (!teams[Team1])
-            teams[Team1] = { name: Team1, points: 0, goalsFor: 0, goalsAgainst: 0, goalDifference: 0 };
-          if (!teams[Team2])
-            teams[Team2] = { name: Team2, points: 0, goalsFor: 0, goalsAgainst: 0, goalDifference: 0 };
+     
+      if((Result1 != null && Result2!=null) && Status == "Z"){
 
-          teams[Team1].goalsFor += Result1;
-          teams[Team1].goalsAgainst += Result2;
-          teams[Team2].goalsFor += Result2;
-          teams[Team2].goalsAgainst += Result1;
+        console.log(Team1+"  "+Result1)
+      if (!teams[Team1])
+        teams[Team1] = { name: Team1, points: 0, goalsFor: 0, goalsAgainst: 0, goalDifference: 0 };
+      if (!teams[Team2])
+        teams[Team2] = { name: Team2, points: 0, goalsFor: 0, goalsAgainst: 0, goalDifference: 0 };
 
-          if (Result1 > Result2) {
-            teams[Team1].points += 3;
-          } else if (Result1 < Result2) {
-            teams[Team2].points += 3;
-          } else {
-            teams[Team1].points += 1;
-            teams[Team2].points += 1;
-          }
+      teams[Team1].goalsFor += Result1;
+      teams[Team1].goalsAgainst += Result2;
+      teams[Team2].goalsFor += Result2;
+      teams[Team2].goalsAgainst += Result1;
 
-          teams[Team1].goalDifference = teams[Team1].goalsFor - teams[Team1].goalsAgainst;
-          teams[Team2].goalDifference = teams[Team2].goalsFor - teams[Team2].goalsAgainst;
-        }
+      teams[Team1].matchesPlayed=teams[Team1].matchesPlayed+1; 
+      teams[Team2].matchesPlayed=teams[Team2].matchesPlayed+1;
+
+      if (Result1 > Result2) {
+        teams[Team1].points += 3;
+      } else if (Result1 < Result2) {
+        teams[Team2].points += 3;
+      } else {
+        teams[Team1].points += 1;
+        teams[Team2].points += 1;
+      }
+
+      teams[Team1].goalDifference = teams[Team1].goalsFor - teams[Team1].goalsAgainst;
+      teams[Team2].goalDifference = teams[Team2].goalsFor - teams[Team2].goalsAgainst;
+    }
     });
 
     return Object.values(teams).sort((a, b) => b.points - a.points || b.goalDifference - a.goalDifference);
   };
-
+  const getTeamMatchesCount = (matches, teamName) => {
+    return matches.filter(({ Team1, Team2, Result1, Result2, Status }) => 
+        (Team1 === teamName || Team2 === teamName) && Result1 != null && Result2 != null && Status ==="Z"
+    ).length;
+};
   return (
     <div className="p-4 result resF">
       
@@ -98,6 +108,7 @@ const Results = () => {
               <th className="text-center">#</th>
               <th className="text-center">Drużyna</th>
               <th className="text-center">Punkty</th>
+              <th className="text-center">Mecze</th>
               <th className="text-center">B. Strzelone</th>
               <th className="text-center">B. Stracone</th>
               <th className="text-center">B. Bilans</th>
@@ -109,6 +120,7 @@ const Results = () => {
                 <td className="text-center">{index + 1}</td>
                 <td>{team.name}</td>
                 <td className="text-center">{team.points}</td>
+                <td className="text-center">{getTeamMatchesCount(matchData, team.name)}</td>
                 <td className="text-center">{team.goalsFor}</td>
                 <td className="text-center">{team.goalsAgainst}</td>
                 <td className="text-center">{team.goalDifference}</td>
@@ -132,13 +144,13 @@ const Results = () => {
           </thead>
           <tbody>
             {matchData
-              .sort((a, b) => a.Order - b.Order) // Sortowanie od najwyższego ID do najniższego
-              .map(({ Id, Team1, Team2, Result1, Result2, Status, Order }) => (
+              .sort((a, b) => b.Id - a.Id) // Sortowanie od najwyższego ID do najniższego
+              .map(({ Id, Team1, Team2, Result1, Result2, Status }) => (                
                 <tr key={Id}>
                   <td className="text-center">{`${Order}`}</td>
                   <td className="text-center">{`${Team1} - ${Team2}`}</td>
-                  <td className="text-center">{`${Result1== null? '-' : Result1} - ${Result2 == null ?'-': Result2}`}</td>
-                  <td className="text-center">{Status == "Z" ? "ZAKONCZONY" : Status == "R" ? "ROZPOCZĘTY": "NOWY" }</td>
+                  <td className="text-center">{`${Result1 == null ? "-": Result1} - ${Result2 == null ? "-" : Result2}`}</td>
+                  <td className="text-center">{`${Status == "N" ? "Zaplanowany": Status == "Z"? "Zakończony" : "W trakcie"}`}</td>
                 </tr>
               ))}
           </tbody>

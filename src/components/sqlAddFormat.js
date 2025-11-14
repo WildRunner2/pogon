@@ -30,44 +30,44 @@ const SqlAddFormat = (props) => {
   }, []);
 
   // Fetch categories
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const token = getAuthToken();
-      const userId = getUserId();
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     const token = getAuthToken();
+  //     const userId = getUserId();
 
-      const path = `${host}/api/scripts/cat/${userId}`;
-      try {
-        const response = await axios.get(path, {
-          headers: { Authorization: `Basic ${token}` },
-        });
-        if (response.data.data) setCategories(response.data.data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
+  //     const path = `${host}/api/scripts/cat/${userId}`;
+  //     try {
+  //       const response = await axios.get(path, {
+  //         headers: { Authorization: `Basic ${token}` },
+  //       });
+  //       if (response.data.data) setCategories(response.data.data);
+  //     } catch (error) {
+  //       console.error("Error fetching categories:", error);
+  //     }
+  //   };
 
-    fetchCategories();
-  }, [host]);
+  //   fetchCategories();
+  // }, [host]);
 
-  // Fetch all scripts
-  useEffect(() => {
-    const fetchScripts = async () => {
-      const token = getAuthToken();
-      const userId = getUserId();
+  // // Fetch all scripts
+  // useEffect(() => {
+  //   const fetchScripts = async () => {
+  //     const token = getAuthToken();
+  //     const userId = getUserId();
 
-      const path = `${host}/api/scripts/${userId}`;
-      try {
-        const response = await axios.get(path, {
-          headers: { Authorization: `Basic ${token}` },
-        });
-        if (response.data.data) setScripts(response.data.data);
-      } catch (error) {
-        console.error("Error fetching scripts:", error);
-      }
-    };
+  //     const path = `${host}/api/scripts/${userId}`;
+  //     try {
+  //       const response = await axios.get(path, {
+  //         headers: { Authorization: `Basic ${token}` },
+  //       });
+  //       if (response.data.data) setScripts(response.data.data);
+  //     } catch (error) {
+  //       console.error("Error fetching scripts:", error);
+  //     }
+  //   };
 
-    fetchScripts();
-  }, [host]);
+  //   fetchScripts();
+  // }, [host]);
 
   // Helper methods for user and token
   const getUserId = () => {
@@ -102,43 +102,43 @@ const SqlAddFormat = (props) => {
     setValue("");
   };
 
-  const saveSql = async (event) => {
-    event.preventDefault();
-    const sql = value;
-    const categoryId = sqlForm.current.category.value;
-    const scriptName = sqlForm.current.script_name.value;
-    const userId = getUserId();
-    const token = getAuthToken();
+  // const saveSql = async (event) => {
+  //   event.preventDefault();
+  //   const sql = value;
+  //   const categoryId = sqlForm.current.category.value;
+  //   const scriptName = sqlForm.current.script_name.value;
+  //   const userId = getUserId();
+  //   const token = getAuthToken();
 
-    try {
-      const response = await axios.post(
-        `${host}/api/scripts/`,
-        { sql, userId, categoryId, scriptName },
-        { headers: { Authorization: `Basic ${token}` } }
-      );
-      setMessage(response.data?.msg === "OK" ? "Saved successfully" : "Save failed");
-      setShowModal(true);
-    } catch (error) {
-      console.error("Error saving SQL:", error);
-    }
-  };
+  //   try {
+  //     const response = await axios.post(
+  //       `${host}/api/scripts/`,
+  //       { sql, userId, categoryId, scriptName },
+  //       { headers: { Authorization: `Basic ${token}` } }
+  //     );
+  //     setMessage(response.data?.msg === "OK" ? "Saved successfully" : "Save failed");
+  //     setShowModal(true);
+  //   } catch (error) {
+  //     console.error("Error saving SQL:", error);
+  //   }
+  // };
 
-  const updateSql = async (scriptId, updatedSql, categoryId, scriptName) => {
-    const userId = getUserId();
-    const token = getAuthToken();
+  // const updateSql = async (scriptId, updatedSql, categoryId, scriptName) => {
+  //   const userId = getUserId();
+  //   const token = getAuthToken();
 
-    try {
-      const response = await axios.put(
-        `${host}/api/scripts/${scriptId}`,
-        { sql: updatedSql, userId, categoryId, scriptName },
-        { headers: { Authorization: `Basic ${token}` } }
-      );
-      setMessage(response.data?.msg === "OK" ? "Updated successfully" : "Update failed");
-      setShowModal(true);
-    } catch (error) {
-      console.error("Error updating SQL:", error);
-    }
-  };
+  //   try {
+  //     const response = await axios.put(
+  //       `${host}/api/scripts/${scriptId}`,
+  //       { sql: updatedSql, userId, categoryId, scriptName },
+  //       { headers: { Authorization: `Basic ${token}` } }
+  //     );
+  //     setMessage(response.data?.msg === "OK" ? "Updated successfully" : "Update failed");
+  //     setShowModal(true);
+  //   } catch (error) {
+  //     console.error("Error updating SQL:", error);
+  //   }
+  // };
 
   const deleteSql = async (scriptId) => {
     const token = getAuthToken();
@@ -159,7 +159,7 @@ const SqlAddFormat = (props) => {
     <>
       {/* SQL Add/Edit Form */}
       <form ref={sqlForm} className="sqlForm">
-        <div className="sqlNavBar row">
+        {/* <div className="sqlNavBar row">
           <div className="col-3">
             <label htmlFor="category" className="sql_form-label">Category</label>
             <select name="category" id="category" className="sqlCatChoose">
@@ -174,7 +174,7 @@ const SqlAddFormat = (props) => {
             <label htmlFor="script_name" className="sql_form-label">Script Name</label>
             <input className="sqlName" id="script_name" name="script_name" type="text" />
           </div>
-        </div>
+        </div> */}
         <CodeMirror
           className={openfromContext ? "formated2" : "formated"}
           value={value}
@@ -189,7 +189,7 @@ const SqlAddFormat = (props) => {
         <div className="sqlFormBar2">
           <button onClick={formatSql} className="button_script" type="button">Format</button>
           <button onClick={clearSql} className="button_script" type="button">Clear</button>
-          <button onClick={saveSql} className="button_script" type="submit">Save</button>
+          {/* <button onClick={saveSql} className="button_script" type="submit" disabled="true">Save</button> */}
         </div>
         <div className="sqlFormBar1">
           <select
@@ -300,7 +300,7 @@ const SqlAddFormat = (props) => {
               >
                 Clear
               </button>
-              <button
+              {/* <button
                 type="button"
                 onClick={() =>
                   updateSql(script.id, script.script, script.categoryId, script.scriptName)
@@ -308,7 +308,7 @@ const SqlAddFormat = (props) => {
                 className="button_script"
               >
                 Update
-              </button>
+              </button> */}
               <button
                 type="button"
                 onClick={() => deleteSql(script.id)}

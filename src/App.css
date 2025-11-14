@@ -628,10 +628,12 @@ header{
 /* NO PAGE */
 
 .no_page{
-    max-width: 500px;
+    max-width: 60%;
     justify-content: center;
     margin: auto;
     padding: 30px;
+    color:#fff;
+    font-size: 1.3rem;
 }
 
 /* HOME */

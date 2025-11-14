@@ -784,6 +784,12 @@ header{
     min-width: 20%;
     min-height: 3rem;
 }
+.resultAddField2{
+    min-width: 20%;
+    min-height: 3rem;
+    width: 100%;
+    text-align: center;
+}
 .bigFont{
     font-size: 1.2rem;
 }
@@ -816,6 +822,8 @@ header{
 .tDark{
     background-color: #fff;
     margin-bottom: 2rem;
+}
+.resAdmin{
 }
 
 /* RESPONSIVE */

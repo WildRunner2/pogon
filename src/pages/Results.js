@@ -6,15 +6,25 @@ const Results = () => {
   const [matchData, setMatchData] = useState([]);
   const [gameDate, setGameDate] = useState("");
   const [gameName, setGameName] = useState("");
+  const [gameId, setGameId] = useState(null);
 
   // Helper method to determine the host
   const getHost = () => (auth.DEV ? auth.DEV_URL : auth.PROD_URL);
   const host = getHost();
 
   useEffect(() => {
+    // Pobranie ID z URL
+    const getIdFromUrl = () => {
+      const hashParams = new URLSearchParams(window.location.hash.split("?")[1]);
+      return hashParams.get("id") || "1"; // Domyślnie ID = 1, jeśli nie ma w URL
+    };
+
+    const id = getIdFromUrl();
+    setGameId(id); // Ustawienie ID w stanie
+
     const fetchResults = async () => {
-      const path = `${host}/api/result/`;
-      console.log(path);
+      const path = `${host}/api/result/result/${id}`;
+      console.log("Fetching results from:", path);
       try {
         const response = await axios.get(path);
         if (response.data.data) setMatchData(response.data.data);
@@ -24,8 +34,8 @@ const Results = () => {
     };
 
     const fetchGame = async () => {
-      const path = `${host}/api/result/game`;
-      console.log(path);
+      const path = `${host}/api/result/game/${id}`;
+      console.log("Fetching game from:", path);
       try {
         const response = await axios.get(path);
         if (response.data.data) {
@@ -33,7 +43,7 @@ const Results = () => {
           setGameDate(response.data.data[0].GameDate);
         }
       } catch (error) {
-        console.error("Error fetching results:", error);
+        console.error("Error fetching game:", error);
       }
     };
 
@@ -126,6 +136,7 @@ const Results = () => {
         <table className="table table-bordered tDark">
           <thead className="thead-light tHead">
             <tr>
+              <th className="text-center">#</th>
               <th className="text-center">Mecz</th>
               <th className="text-center">Wynik</th>
               <th className="text-center">Status</th>
@@ -136,6 +147,7 @@ const Results = () => {
               .sort((a, b) => b.Id - a.Id) // Sortowanie od najwyższego ID do najniższego
               .map(({ Id, Team1, Team2, Result1, Result2, Status }) => (                
                 <tr key={Id}>
+                  <td className="text-center">{`${Order}`}</td>
                   <td className="text-center">{`${Team1} - ${Team2}`}</td>
                   <td className="text-center">{`${Result1 == null ? "-": Result1} - ${Result2 == null ? "-" : Result2}`}</td>
                   <td className="text-center">{`${Status == "N" ? "Zaplanowany": Status == "Z"? "Zakończony" : "W trakcie"}`}</td>
